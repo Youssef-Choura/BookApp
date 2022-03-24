@@ -37,29 +37,35 @@ public class UnMarkBook extends HttpServlet {
             if (request.getSession().getAttribute("login") != null) {
                 String userLogin = (String) request.getSession().getAttribute("login");
                 if (request.getParameter("MarkButton") != null) {
+                    //Getting book and user infos
                     Book book = daoUser.getBook(request.getParameter("MarkButton"));
                     User user = daoUser.getUser(userLogin);
                     try {
+                        //Unmark Book
                         daoUser.UnMarkBook(book, user);
                     } catch (DaoException e) {
                         e.printStackTrace();
                     }
-                    ArrayList<String> ISBNS = daoUser.getMarkedISBNS(user);
+                    //Instantiating an arraylist to add marked books to
                     ArrayList<Book> books = new ArrayList<>();
+                    //Getting books isbn
+                    ArrayList<String> ISBNS = daoUser.getMarkedISBNS(user);
+                    //Creating books from isbns and adding them to the marked books list
                     for (String isbn : ISBNS) {
                         Book NewBook = daoUser.getBook(isbn);
                         books.add(NewBook);
                     }
+                    //Forwarding book list to UserMarkedBooks.jsp page
                     request.setAttribute("books", books);
                     this.getServletContext().getRequestDispatcher("/UserMarkedBooks.jsp").forward(request, response);
                 }
             }
-            //if not throw Error
+            //If there's no session throw SessionError
             else {
                 throw new ServletException("No session found u have to login first");
             }
         } catch (ServletException NoSessionError) {
-            //Catch error message and display on the login page
+            //Catch error message and display it on the login page
             request.setAttribute("NoSessionError", NoSessionError.getMessage());
             this.getServletContext().getRequestDispatcher("/index.jsp").forward(request, response);
         }

@@ -25,8 +25,8 @@ public class AllBooks extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         try {
             //Checking session
-            String userLogin = (String) request.getSession().getAttribute("login");
-            if (userLogin != null) {
+            if (request.getSession().getAttribute("login") != null) {
+                String userLogin = (String) request.getSession().getAttribute("login");
                 //If it's an administrator
                 if (userLogin.equals("admin")) {
                     //Forwarding to Admin books page
@@ -39,7 +39,7 @@ public class AllBooks extends HttpServlet {
                     this.getServletContext().getRequestDispatcher("/UserHomePage.jsp").forward(request, response);
                 }
             }
-            //If it's not the admin throw SessionError
+            //If there's no session throw SessionError
             else {
                 throw new ServletException("No session found u have to login first");
 

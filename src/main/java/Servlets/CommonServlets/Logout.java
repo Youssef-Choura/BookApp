@@ -23,7 +23,7 @@ public class Logout extends HttpServlet {
                 request.getSession().invalidate();
                 this.getServletContext().getRequestDispatcher("/index.jsp").forward(request, response);
             }
-            //If it's not the admin throw SessionError
+            //If there's no session throw SessionError
             else {
                 throw new ServletException("No session found u have to login first");
 

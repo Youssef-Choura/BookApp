@@ -26,20 +26,22 @@ public class ViewBook extends HttpServlet {
         try {
             //Checking session
             if (request.getSession().getAttribute("login") != null) {
+                String userLogin = (String) request.getSession().getAttribute("login");
                 //Checking ISBN value
                 if (request.getParameter("ViewButton") != null) {
-                    //if not null import book with the retrieved ISBN
+                    //Getting book info with the retrieved ISBN
                     Book book = daoUser.getBook(request.getParameter("ViewButton"));
+                    //Forwarding book info to ViewBook.jsp and showing it
                     request.setAttribute("CurrentBook", book);
                     this.getServletContext().getRequestDispatcher("/ViewBook.jsp").forward(request, response);
                 }
             }
-            //if not throw Error
+            //If there's no session throw SessionError
             else {
                 throw new ServletException("No session found u have to login first");
             }
         } catch (ServletException NoSessionError) {
-            //Catch error message and display on the login page
+            //Catch error message and display it on the login page
             request.setAttribute("NoSessionError", NoSessionError.getMessage());
             this.getServletContext().getRequestDispatcher("/index.jsp").forward(request, response);
         }
