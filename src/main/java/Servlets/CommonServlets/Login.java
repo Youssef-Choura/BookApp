@@ -34,35 +34,32 @@ public class Login extends HttpServlet {
 
         //Setting login
         try {
-            //try setting login
             user.setLogin(request.getParameter("Username"));
         } catch (BeanException LoginError) {
-            //if length is superior to 10 send error message
+            //If length is superior to 10 send error message
             request.setAttribute("LoginLengthError", LoginError.getMessage());
         }
 
         //Setting password
         try {
-            //try setting password
             user.setPassword(request.getParameter("Password"));
         } catch (BeanException PasswordError) {
-            //if length is inferior to 6 send error message
+            //If length is inferior to 6 send error message
             request.setAttribute("PasswordLengthError", PasswordError.getMessage());
         }
 
-        //Searching database for matching username and password
-        //If the user is found redirect to Books home page
         try {
-            //if it's an administrator
+            //Sign in user
             if (daoUser.signIn(user) && user.getLogin().equals("admin")){
+                //If it's an administrator
                 //Start a new session
                 HttpSession session = request.getSession();
                 session.setAttribute("login",user.getLogin());
-                //Adding cookie
+                //Adding 1 month cookie
                 Cookie cookie =new Cookie("login", user.getLogin());
-                cookie.setMaxAge(60*60*24);
+                cookie.setMaxAge(60*60*24*30);
                 response.addCookie(cookie);
-                //Dispatcher
+                //Forwarding to Admin home page
                 request.setAttribute("books",daoUser.getBooks());
                 this.getServletContext().getRequestDispatcher("/Administrator.jsp").forward(request, response);
                 //if it's a normal user
@@ -70,16 +67,16 @@ public class Login extends HttpServlet {
                 //Start new session
                 HttpSession session = request.getSession();
                 session.setAttribute("login",user.getLogin());
-                //Adding cookie
+                //Adding 1 day cookie
                 Cookie cookie =new Cookie("login", user.getLogin());
                 cookie.setMaxAge(60*60*24);
                 response.addCookie(cookie);
-                //Dispatcher
+                //Forwarding to User home page
                 request.setAttribute("books",daoUser.getBooks());
                 this.getServletContext().getRequestDispatcher("/UserHomePage.jsp").forward(request, response);
             }
         } catch (BeanException LoginError) {
-            //if not found  reload and display error message
+            //If infos are not found in the database reload and display error message
             request.setAttribute("LoginInfoError", LoginError.getMessage());
             this.getServletContext().getRequestDispatcher("/index.jsp").forward(request, response);
         }

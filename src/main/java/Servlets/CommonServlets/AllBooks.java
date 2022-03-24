@@ -25,23 +25,27 @@ public class AllBooks extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         try {
             //Checking session
-            //If there's a session show jsp page
-            if (request.getSession().getAttribute("login") != null) {
-                if (request.getSession().getAttribute("login").equals("admin")) {
+            String userLogin = (String) request.getSession().getAttribute("login");
+            if (userLogin != null) {
+                //If it's an administrator
+                if (userLogin.equals("admin")) {
+                    //Forwarding to Admin books page
                     request.setAttribute("books",daoUser.getBooks());
                     this.getServletContext().getRequestDispatcher("/Administrator.jsp").forward(request, response);
+                    //If it's a normal user
                 } else {
+                    //Forwarding to user books page
                     request.setAttribute("books",daoUser.getBooks());
                     this.getServletContext().getRequestDispatcher("/UserHomePage.jsp").forward(request, response);
                 }
             }
-            //if not throw Error
+            //If it's not the admin throw SessionError
             else {
                 throw new ServletException("No session found u have to login first");
 
             }
         } catch (ServletException NoSessionError) {
-            //Catch error message and display on the login page
+            //Catch error message and display it on the login page
             request.setAttribute("NoSessionError", NoSessionError.getMessage());
             this.getServletContext().getRequestDispatcher("/index.jsp").forward(request, response);
         }

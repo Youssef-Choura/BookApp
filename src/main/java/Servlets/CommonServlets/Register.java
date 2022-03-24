@@ -34,8 +34,9 @@ public class Register extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        //Creation of a new user to compare to database
         User user = new User();
-
+        //Setting fields
         user.setFirstName(request.getParameter("FirstName"));
         user.setFamilyName(request.getParameter("FamilyName"));
         user.setGrade(request.getParameter("Grade"));
@@ -43,41 +44,39 @@ public class Register extends HttpServlet {
         user.setGender(request.getParameter("Gender"));
         //Setting login
         try {
-            //try setting login
             user.setLogin(request.getParameter("Username"));
         } catch (BeanException LoginError) {
-            //if length is superior to 10 send error message
+            //If length is superior to 10 send error message
             request.setAttribute("LoginLengthError", LoginError.getMessage());
         }
         try {
-            //try setting phone number
+            //Setting phone number
             user.setTelephone(request.getParameter("Telephone"));
         } catch (BeanException TelephoneFormatError) {
-            //if it's not numerical
+            //If it's not numerical send error message
             request.setAttribute("TelephoneFormatError", TelephoneFormatError.getMessage());
         }
         //Setting Email
         try {
-            //try setting email
             user.setEmail(request.getParameter("Email"));
         } catch (BeanException EmailError) {
-            //if regex doesn't match send error message
+            //If regex doesn't match send error message
             request.setAttribute("EmailFormatError", EmailError.getMessage());
         }
         //Password setting and Confirmation
         try {
             //Compare Passwords
             if (Objects.equals(request.getParameter("PasswordConfirmation"), request.getParameter("Password"))) {
-                //if they match check password length
+                //If they match check password length
                 try {
-                    //try setting password
+                    //Setting password
                     user.setPassword(request.getParameter("Password"));
                 } catch (BeanException PasswordError) {
-                    //if length is inferior to 6 send error message
+                    //If length is inferior to 6 send error message
                     request.setAttribute("PasswordLengthError", PasswordError.getMessage());
                 }
             } else {
-                //else throw an exception
+                //If they don't match throw an exception
                 throw new BeanException("Password doesn't match");
             }
         } catch (BeanException PassConfirmationError) {
@@ -88,19 +87,20 @@ public class Register extends HttpServlet {
         //Adding user to database
 
         try {
+            //Add user
             daoUser.signUp(user);
-            //if user is added redirect to BooksPage
+            //Start a new session
             HttpSession session = request.getSession();
             session.setAttribute("login",user.getLogin());
-            //Adding cookie
+            //Adding 1 day cookie
             Cookie cookie =new Cookie("login", user.getLogin());
             cookie.setMaxAge(60*60*24);
             response.addCookie(cookie);
-            //Dispatcher
+            //Forwarding to User home page
             request.setAttribute("books",daoUser.getBooks());
             this.getServletContext().getRequestDispatcher("/UserHomePage.jsp").forward(request, response);
+            //If user is not added reload and display errors
         } catch (DaoException UniqueError) {
-            //if not added reload and display errors
             request.setAttribute("UniqueError", UniqueError.getMessage());
             request.setAttribute("CurrentUser",user);
             this.getServletContext().getRequestDispatcher("/Registration.jsp").forward(request, response);
