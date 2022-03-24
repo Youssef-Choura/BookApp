@@ -64,7 +64,7 @@
                 <label for="exampleFormControlSelect1" class="col-sm-2 col-form-label">Language</label>
                 <div class="col-sm-3">
                     <select class="form-control" name="Language" id="exampleFormControlSelect1" required>
-                        <option><c:out value="${CurrentBook.getLanguage()}"/></option>
+                        <option value="${CurrentBook.getLanguage()}"><c:out value="${CurrentBook.getLanguage()}"/>"</option>
                         <option value="English">English</option>
                         <option value="French">French</option>
                         <option value="Arabic">Arabic</option>

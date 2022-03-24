@@ -35,7 +35,7 @@
             <div class="input-box">
                 <span class="details">Address</span>
                 <label for ="Address">
-                    <input type="text" name="Address" id="Address" placeholder="Enter your family name" value="<c:out value="${CurrentUser.getAddress()}"/>" required>
+                    <input type="text" name="Address" id="Address" placeholder="Enter your Address" value="<c:out value="${CurrentUser.getAddress()}"/>" required>
                 </label>
             </div>
             <div class="input-box">
@@ -54,7 +54,7 @@
             <div class="input-box">
                 <span class="details">Phone Number</span>
                 <label for="Telephone">
-                    <input type="text" name="Telephone" id="Telephone" placeholder="Enter a tunisian phone number(+212)" value="<c:out value="${CurrentUser.getTelephone()}"/>" required>
+                    <input type="text" name="Telephone" id="Telephone" placeholder="(+212)" value="<c:out value="${CurrentUser.getTelephone()}"/>" required>
                 </label>
                 <c:if test="${!empty TelephoneError || !empty TelephoneFormatError }">
                     <p style="font-size: 12px ; margin-bottom: 15px ; color: #9b59b6">

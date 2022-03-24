@@ -1,6 +1,5 @@
 package Servlets.AdminServlets;
 
-import Beans.BeanException;
 import Beans.User;
 import DAO.DaoFactory;
 import DAO.DaoUser;
@@ -33,27 +32,30 @@ public class DeleteUser extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         try {
-            //Checking session
+            //Checking Admin session
             String userLogin = (String) request.getSession().getAttribute("login");
             if (userLogin.equals("admin")) {
+                //Checking login value
                 if (request.getParameter("DeleteButton") != null) {
-                    User user = new User();
                     try {
-                        user.setLogin((request.getParameter("DeleteButton")));
+                        //Getting the user to delete info
+                        User user = daoUser.getUser((request.getParameter("DeleteButton")));
+                        //Deleting user
                         daoUser.deleteUser(user);
+                        //Forwarding the user list and refreshing the jsp page
                         request.setAttribute("Users", daoUser.getUsers());
                         this.getServletContext().getRequestDispatcher("/UsersList.jsp").forward(request, response);
-                    } catch (DaoException | BeanException e) {
+                    } catch (DaoException e) {
                         e.printStackTrace();
                     }
                 }
             }
-            //if not throw Error
+            //If it's not the admin throw SessionError
             else {
                 throw new ServletException("No session found u have to login first");
             }
         } catch (ServletException NoSessionError) {
-            //Catch error message and display on the login page
+            //Catch error message and display it on the login page
             request.setAttribute("NoSessionError", NoSessionError.getMessage());
             this.getServletContext().getRequestDispatcher("/index.jsp").forward(request, response);
         }

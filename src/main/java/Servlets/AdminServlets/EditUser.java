@@ -33,17 +33,19 @@ public class EditUser extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         try {
-            //Checking session
+            //Checking Admin session
             String userLogin = (String) request.getSession().getAttribute("login");
             if (userLogin.equals("admin")) {
+                //Checking login to edit value
                 if (request.getParameter("EditButton") != null) {
+                    //Setting currentLogin and currentUser and forwarding info to EditUser.jsp page
                     currentLogin = request.getParameter("EditButton");
                     currentUser = daoUser.getUser(currentLogin);
                     request.setAttribute("CurrentUser", currentUser);
                     this.getServletContext().getRequestDispatcher("/EditUser.jsp").forward(request, response);
                 }
             }
-            //if not throw Error
+            //If it's not the admin throw SessionError
             else {
                 throw new ServletException("No session found u have to login first");
             }
@@ -57,14 +59,14 @@ public class EditUser extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         try {
-            //Checking session
+            //Checking Admin session
             String userLogin = (String) request.getSession().getAttribute("login");
             if (userLogin.equals("admin")) {
-                if (currentLogin != null) {
-                    currentUser = daoUser.getUser(currentLogin);
-                    String OldLogin = currentUser.getLogin();
+                //Checking currentLogin and currentUser values
+                if (currentLogin != null && currentUser != null) {
+                    //Instantiating a new User
                     User ModifiedUser = new User();
-
+                    //Setting the new user's fields
                     ModifiedUser.setFirstName(request.getParameter("FirstName"));
                     ModifiedUser.setFamilyName(request.getParameter("FamilyName"));
                     ModifiedUser.setGrade(request.getParameter("Grade"));
@@ -72,49 +74,59 @@ public class EditUser extends HttpServlet {
                     ModifiedUser.setGender(request.getParameter("Gender"));
 
                     try {
-                        //try setting phone number
+                        //Setting phone number
                         ModifiedUser.setTelephone(request.getParameter("Telephone"));
                     } catch (BeanException TelephoneFormatError) {
-                        //if it's not tunisian
+                        //If it's not tunisian send error message
                         request.setAttribute("TelephoneFormatError", TelephoneFormatError.getMessage());
                     }
                     try {
-                        //try setting login
+                        //Setting login
                         ModifiedUser.setLogin(request.getParameter("Login"));
                     } catch (BeanException LoginError) {
-                        //if length is superior to 10 send error message
+                        //If length is superior to 10 send error message
                         request.setAttribute("LoginLengthError", LoginError.getMessage());
                     }
                     try {
-                        //try setting email
+                        //Setting email
                         ModifiedUser.setEmail(request.getParameter("Email"));
                     } catch (BeanException EmailError) {
-                        //if regex doesn't match send error message
+                        //If regex doesn't match send error message
                         request.setAttribute("EmailFormatError", EmailError.getMessage());
                     }
                     try {
-                        //try setting password
+                        //Setting password
                         ModifiedUser.setPassword(request.getParameter("Password"));
                     } catch (BeanException PasswordError) {
-                        //if length is inferior to 6 send error message
+                        //If length is inferior to 6 send error message
                         request.setAttribute("PasswordLengthError", PasswordError.getMessage());
                     }
                     try {
-                        daoUser.editUser(ModifiedUser, OldLogin);
+                        //Editing User
+                        daoUser.editUser(ModifiedUser, currentUser.getLogin());
+                        //Forwarding user list to UsersList.jsp
                         request.setAttribute("Users", daoUser.getUsers());
                         this.getServletContext().getRequestDispatcher("/UsersList.jsp").forward(request, response);
+                        //Resetting values
+                        currentLogin=null;
+                        currentUser=null;
+                    //Catching errors
                     } catch (DaoException DaoException) {
+                        //Forward currentUser info and error messages
                         request.setAttribute("CurrentUser", currentUser);
                         request.setAttribute("DaoException", DaoException.getMessage());
                         this.getServletContext().getRequestDispatcher("/EditUser.jsp").forward(request, response);
+
                     } catch (LoginException LoginError) {
                         request.setAttribute("CurrentUser", currentUser);
                         request.setAttribute("LoginError", LoginError.getMessage());
                         this.getServletContext().getRequestDispatcher("/EditUser.jsp").forward(request, response);
+
                     } catch (EmailException EmailError) {
                         request.setAttribute("CurrentUser", currentUser);
                         request.setAttribute("EmailError", EmailError.getMessage());
                         this.getServletContext().getRequestDispatcher("/EditUser.jsp").forward(request, response);
+
                     } catch (TelephoneException TelephoneError) {
                         request.setAttribute("CurrentUser", currentUser);
                         request.setAttribute("TelephoneError", TelephoneError.getMessage());
@@ -122,7 +134,7 @@ public class EditUser extends HttpServlet {
                     }
                 }
             }
-            //if not throw Error
+            //If it's not the admin throw SessionError
             else {
                 throw new ServletException("No session found u have to login first");
             }

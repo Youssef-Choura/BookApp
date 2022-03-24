@@ -24,23 +24,24 @@ public class BookContent extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         try {
-            //Checking session
+            //Checking Admin session
             String userLogin = (String) request.getSession().getAttribute("login");
             if (userLogin.equals("admin")) {
                 //Checking ISBN value
                 if (request.getParameter("ViewButton") != null) {
-                    //if not null import book with the retrieved ISBN
+                    //Getting book info with the retrieved ISBN
                     Book book = daoUser.getBook(request.getParameter("ViewButton"));
+                    //Forwarding book info to BookContent.jsp and showing it
                     request.setAttribute("CurrentBook", book);
                     this.getServletContext().getRequestDispatcher("/BookContent.jsp").forward(request, response);
                 }
             }
-            //if not throw Error
+            //If it's not the admin throw SessionError
             else {
                 throw new ServletException("No session found u have to login first");
             }
         } catch (ServletException NoSessionError) {
-            //Catch error message and display on the login page
+            //Catch error message and display it on the login page
             request.setAttribute("NoSessionError", NoSessionError.getMessage());
             this.getServletContext().getRequestDispatcher("/index.jsp").forward(request, response);
         }

@@ -25,25 +25,23 @@ public class Users extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         try {
-            //Checking session
-            //If there's a session show jsp page
+            //Checking Admin session
             String userLogin = (String) request.getSession().getAttribute("login");
             if (userLogin.equals("admin")) {
+                //Forwarding user's info list to UserList.jsp
                 request.setAttribute("Users", daoUser.getUsers());
                 this.getServletContext().getRequestDispatcher("/UsersList.jsp").forward(request, response);
             }
-            //if not throw Error
+            //If it's not the admin throw SessionError
             else {
                 throw new ServletException("No session found u have to login first");
-
             }
         } catch (
                 ServletException NoSessionError) {
-            //Catch error message and display on the login page
+            //Catch error message and display it on the login page
             request.setAttribute("NoSessionError", NoSessionError.getMessage());
             this.getServletContext().getRequestDispatcher("/index.jsp").forward(request, response);
         }
-
     }
 
     @Override

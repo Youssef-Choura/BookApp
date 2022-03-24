@@ -35,13 +35,13 @@
             <div class="form-group row mx-sm-3">
                 <label for="inputTitle" class="col-sm-2 col-form-label">Title</label>
                 <div class="col-sm-3">
-                    <input type="text" class="form-control" id="inputTitle" name="Title" placeholder="Title" required>
+                    <input type="text" class="form-control" id="inputTitle" name="Title" placeholder="Title" value="<c:out value="${CurrentBook.getTitle()}"/>" required>
                 </div>
             </div>
             <div class="form-group row mx-sm-3">
                 <label for="inputISBN" class="col-sm-2 col-form-label">ISBN</label>
                 <div class="col-sm-3">
-                    <input type="text" class="form-control" id="inputISBN" name="ISBN" placeholder="ISBN" required>
+                    <input type="text" class="form-control" id="inputISBN" name="ISBN" placeholder="ISBN" value="<c:out value="${CurrentBook.getIsbn()}"/>" required>
                 </div>
                 <c:if test="${!empty ISBNError || !empty ISBNFormatError }">
                     <p style="font-size: 12px ; margin-bottom: 15px ; color: #9b59b6">
@@ -53,7 +53,7 @@
             <div class="form-group row mx-sm-3">
                 <label for="inputAuthor" class="col-sm-2 col-form-label">Author(s)</label>
                 <div class="col-sm-3">
-                    <input type="text" class="form-control" id="inputAuthor" name="Authors" placeholder="Author(s)"
+                    <input type="text" class="form-control" id="inputAuthor" name="Authors" placeholder="Author(s)" value="<c:out value="${CurrentBook.getAuthors()}"/>"
                            required>
                 </div>
             </div>
@@ -61,6 +61,7 @@
                 <label for="exampleFormControlSelect1" class="col-sm-2 col-form-label">Language</label>
                 <div class="col-sm-3">
                     <select class="form-control" name="Language" id="exampleFormControlSelect1">
+                        <option value="${CurrentBook.getLanguage()}"><c:out value="${CurrentBook.getLanguage()}"/></option>
                         <option value="English">English</option>
                         <option value="French">French</option>
                         <option value="Arabic">Arabic</option>
@@ -71,7 +72,7 @@
             <div class="form-group row mx-sm-3 ">
                 <label for="inputYear" class="col-sm-2 col-form-label">Publish Year</label>
                 <div class="col-sm-3">
-                    <input type="text" class="form-control" name="PublishYear" id="inputYear" placeholder="Publish Year"
+                    <input type="text" class="form-control" name="PublishYear" id="inputYear" placeholder="Publish Year" value="<c:out value="${CurrentBook.getYear()}"/>"
                            required>
                 </div>
                 <c:if test="${!empty PublishYearError }">
@@ -83,8 +84,8 @@
             <div class="form-group row mx-sm-3">
                 <label for="exampleFormControlTextarea1" class="col-sm-2 col-form-label">Abstract</label>
                 <div class="col-sm-3">
-                    <textarea class="form-control" name="Abstract" id="exampleFormControlTextarea1" rows="5"
-                              required></textarea>
+                    <textarea class="form-control" name="Abstract" id="exampleFormControlTextarea1" rows="5" placeholder="Abstract"
+                              required><c:out value="${CurrentBook.getAbstract_()}"/></textarea>
                 </div>
                 <c:if test="${!empty AbstractError }">
                     <p style="font-size: 12px ; margin-bottom: 15px ; color: #9b59b6">

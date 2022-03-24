@@ -30,23 +30,18 @@ public class NewBook extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         try {
-            //Checking session
-            //If there's a session show jsp page
+            //Checking Admin session
             String userLogin = (String) request.getSession().getAttribute("login");
             if (userLogin.equals("admin")) {
-                if (request.getSession().getAttribute("login").equals("admin")) {
-                    this.getServletContext().getRequestDispatcher("/NewBook.jsp").forward(request, response);
-                } else {
-                    this.getServletContext().getRequestDispatcher("/NewBook.jsp").forward(request, response);
-                }
+                //Redirect to UsersList.jsp page
+                response.sendRedirect("/BookApp/NewBook.jsp");
             }
-            //if not throw Error
-            else {
+            //If it's not the admin throw SessionError
+            else{
                 throw new ServletException("No session found u have to login first");
-
             }
         } catch (ServletException NoSessionError) {
-            //Catch error message and display on the login page
+            //Catch error message and display it on the login page
             request.setAttribute("NoSessionError", NoSessionError.getMessage());
             this.getServletContext().getRequestDispatcher("/index.jsp").forward(request, response);
         }
@@ -59,22 +54,22 @@ public class NewBook extends HttpServlet {
             //Checking session
             String userLogin = (String) request.getSession().getAttribute("login");
             if (userLogin.equals("admin")) {
-                //Creation of a new book with admin inputs
+                //Instantiating a new book
                 Book book = new Book();
-
+                //Setting fields
                 try {
-                    //try setting Year
+                    //Setting Year
                     book.setYear(Integer.parseInt(request.getParameter("PublishYear")));
                 } catch (BeanException | NumberFormatException PublishYearError) {
-                    //if year isn't between 1000 and 2022 send error message
+                    //If year isn't between 1000 and 2022 send error message
                     request.setAttribute("PublishYearError", PublishYearError.getMessage());
                 }
 
                 try {
-                    //try setting ISBN
+                    //Setting ISBN
                     book.setIsbn((request.getParameter("ISBN")));
                 } catch (BeanException ISBNFormatError) {
-                    //if ISBN contains other characters than numbers send error
+                    //if ISBN isn't composed of 10 or 13 numbers send error
                     request.setAttribute("ISBNFormatError", ISBNFormatError.getMessage());
                 }
                 //Setting other parameters
@@ -83,29 +78,33 @@ public class NewBook extends HttpServlet {
                 book.setAuthors(request.getParameter("Authors"));
                 book.setTitle(request.getParameter("Title"));
 
-                //Adding book to database
-
                 try {
+                    //Adding book to database
                     daoUser.addBook(book);
+                    //Forwarding the new book list to the home page
                     request.setAttribute("books", daoUser.getBooks());
                     this.getServletContext().getRequestDispatcher("/Administrator.jsp").forward(request, response);
-                    //if not added reload and display errors
+                    //Catching exceptions
                 } catch (IsbnException ISBNError) {
+                    //If not added forward inputs and display errors
                     request.setAttribute("ISBNError", ISBNError.getMessage());
+                    request.setAttribute("CurrentBook",book);
                     this.getServletContext().getRequestDispatcher("/NewBook.jsp").forward(request, response);
                 } catch (AbstractException AbstractError) {
                     request.setAttribute("AbstractError", AbstractError.getMessage());
+                    request.setAttribute("CurrentBook",book);
                     this.getServletContext().getRequestDispatcher("/NewBook.jsp").forward(request, response);
                 } catch (DaoException DaoError) {
                     request.setAttribute("DaoError", DaoError.getMessage());
+                    request.setAttribute("CurrentBook",book);
                     this.getServletContext().getRequestDispatcher("/NewBook.jsp").forward(request, response);
                 }
-
+                //If it's not the admin throw SessionError
             } else {
                 throw new ServletException("No session found u have to login first");
             }
         } catch (ServletException NoSessionError) {
-            //Catch error message and display on the login page
+            //Catch error message and display it on the login page
             request.setAttribute("NoSessionError", NoSessionError.getMessage());
             this.getServletContext().getRequestDispatcher("/index.jsp").forward(request, response);
         }

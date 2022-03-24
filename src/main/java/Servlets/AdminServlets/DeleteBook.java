@@ -32,27 +32,30 @@ public class DeleteBook extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         try {
-            //Checking session
+            //Checking Admin session
             String userLogin = (String) request.getSession().getAttribute("login");
             if (userLogin.equals("admin")) {
+                //Checking ISBN value
                 if (request.getParameter("DeleteButton") != null) {
-                    Book book = new Book();
                     try {
-                        book.setIsbn(request.getParameter("DeleteButton"));
+                        //Getting book info with the retrieved ISBN
+                        Book book = daoUser.getBook (request.getParameter("DeleteButton"));
+                        //Deleting book
                         daoUser.deleteBook(book);
+                        //Forwarding the new book list and refreshing the jsp page
                         request.setAttribute("books", daoUser.getBooks());
                         this.getServletContext().getRequestDispatcher("/Administrator.jsp").forward(request, response);
-                    } catch (BeanException | DaoException e) {
+                    } catch (DaoException e) {
                         e.printStackTrace();
                     }
                 }
             }
-            //if not throw Error
+            //If it's not the admin throw SessionError
             else {
                 throw new ServletException("No session found u have to login first");
             }
         } catch (ServletException NoSessionError) {
-            //Catch error message and display on the login page
+            //Catch error message and display it on the login page
             request.setAttribute("NoSessionError", NoSessionError.getMessage());
             this.getServletContext().getRequestDispatcher("/index.jsp").forward(request, response);
         }
