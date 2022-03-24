@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- ===== Iconscout CSS ===== -->
+    <link rel="stylesheet" href="https://unicons.iconscout.com/release/v4.0.0/css/line.css">
+    <!-- ===== CSS ===== -->
+    <link rel="stylesheet" href="RegistrationCss/Registration.css">
+    <title>Registration Form</title>
+
+</head>
+<body>
+<div class="container">
+    <div class="title">Registration</div>
+    <form method="post" action="Register">
+        <!--Personal Information-->
+
+        <div class="SubTitle-one">Personal Information</div>
+
+        <div class="user-details">
+            <div class="input-box">
+                <span class="details">First name</span>
+                <label for="FirstName">
+                    <input type="text" name="FirstName" id="FirstName" placeholder="Enter your first name " value="<c:out value="${CurrentUser.getFirstName()}"/>" required>
+                </label>
+            </div>
+            <div class="input-box">
+                <span class="details">Family name</span>
+                <label for="FamilyName">
+                    <input type="text" name="FamilyName" id="FamilyName" placeholder="Enter your family name " value="<c:out value="${CurrentUser.getFamilyName()}"/>" required>
+                </label>
+            </div>
+            <div class="input-box">
+                <span class="details">Address</span>
+                <label for ="Address">
+                    <input type="text" name="Address" id="Address" placeholder="Enter your family name" value="<c:out value="${CurrentUser.getAddress()}"/>" required>
+                </label>
+            </div>
+            <div class="input-box">
+                <span class="details">Email</span>
+                <label for="Email">
+                    <input type="email" name="Email" id="Email" placeholder="example@example.example" value="<c:out value="${CurrentUser.getEmail()}"/>" required>
+                </label>
+                <c:if test="${!empty EmailFormatError || !empty EmailError }">
+                    <p style="font-size: 12px ; margin-bottom: 15px ; color: #9b59b6">
+                        <c:out value="${EmailFormatError}"/>
+                        <c:out value="${EmailError}"/>
+                    </p>
+                </c:if>
+            </div>
+
+            <div class="input-box">
+                <span class="details">Phone Number</span>
+                <label for="Telephone">
+                    <input type="text" name="Telephone" id="Telephone" placeholder="Enter a tunisian phone number(+212)" value="<c:out value="${CurrentUser.getTelephone()}"/>" required>
+                </label>
+                <c:if test="${!empty TelephoneError || !empty TelephoneFormatError }">
+                    <p style="font-size: 12px ; margin-bottom: 15px ; color: #9b59b6">
+                        <c:out value="${TelephoneError}"/>
+                        <c:out value="${TelephoneFormatError}"/>
+                    </p>
+                </c:if>
+            </div>
+        </div>
+        <div class="gender-details">
+            <input type="radio" name="Gender" id="dot-1" value="Male" checked>
+            <input type="radio" name="Gender" id="dot-2" value="Female" >
+            <input type="radio" name="Gender" id="dot-3" value="Other" >
+            <span class="gender-title">Gender</span>
+            <div class="category">
+                <label for="dot-1">
+                    <span class="dot one"></span>
+                    <span class="gender">Male</span>
+                </label>
+                <label for="dot-2">
+                    <span class="dot two"></span>
+                    <span class="gender">Female</span>
+                </label>
+                <label for="dot-3">
+                    <span class="dot three"></span>
+                    <span class="gender">Other</span>
+                </label>
+            </div>
+        </div>
+        <div class="grade-details">
+            <label for="Grade">Grade</label>
+            <select name="Grade" id="Grade" required>
+                <option><c:out value="${CurrentUser.getGrade()}"/></option>
+                <option value="Student">Student</option>
+                <option value="Worker">Worker</option>
+                <option value="Jobless">Jobless</option>
+            </select>
+        </div>
+
+        <!--Login Information-->
+
+        <div class="SubTitle-two">Login Information</div>
+
+        <div class="Login-Information">
+            <div class="input-box">
+                <span class="details">Username</span>
+                <label for="Username">
+                    <input type="text" name="Username" id="Username" placeholder="Username (maximum 10 digits)" value="<c:out value="${CurrentUser.getLogin()}"/>" required>
+                </label>
+                <c:if test="${!empty LoginLengthError || !empty LoginError }">
+                    <p style="font-size: 12px ; margin-bottom: 15px ; color: #9b59b6">
+                        <c:out value="${LoginLengthError}"/>
+                        <c:out value="${LoginError}"/>
+                    </p>
+                </c:if>
+            </div>
+
+            <div class="input-box">
+                <span class="details">Password</span>
+                <label for="Password">
+                    <input type="password" name="Password" id="Password" placeholder="Password(minimum 6 digits)" required>
+                </label>
+                <c:if test="${!empty PasswordLengthError }">
+                    <p style="font-size: 12px ; margin-bottom: 15px ; color: #9b59b6">
+                        <c:out value="${PasswordLengthError}"/>
+                    </p>
+                </c:if>
+            </div>
+
+            <div class="input-box">
+                <span class="details">Password Confirmation</span>
+                <label for="PasswordConfirmation">
+                    <input type="password" name="PasswordConfirmation" id="PasswordConfirmation" placeholder="Confirm your password" required>
+                </label>
+                <c:if test="${!empty PassConfirmationError }">
+                    <p style="font-size: 12px ; margin-bottom: 15px ; color: #9b59b6">
+                        <c:out value="${PassConfirmationError}"/>
+                    </p>
+                </c:if>
+            </div>
+        </div>
+        <div class="button">
+            <input type="submit" value="Register">
+        </div>
+        <c:if test="${!empty UniqueError }">
+            <p style="font-size: 12px ; margin: 15px ; color: #9b59b6">
+                <c:out value="${UniqueError}"/>
+            </p>
+        </c:if>
+        <div class="Login-ref">
+            <a href="index.jsp">Already have an account ?</a>
+        </div>
+    </form>
+</div>
+</body>
+</html>
