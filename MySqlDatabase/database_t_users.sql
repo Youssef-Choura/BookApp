@@ -37,7 +37,7 @@ CREATE TABLE `t_users` (
   UNIQUE KEY `t_users_login_uindex` (`login`),
   UNIQUE KEY `t_users_telephone_uindex` (`telephone`),
   UNIQUE KEY `t_userscol7_UNIQUE` (`email`)
-) ENGINE=InnoDB AUTO_INCREMENT=5654 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=5656 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -46,7 +46,7 @@ CREATE TABLE `t_users` (
 
 LOCK TABLES `t_users` WRITE;
 /*!40000 ALTER TABLE `t_users` DISABLE KEYS */;
-INSERT INTO `t_users` VALUES (1,'admin','admin2022','admin','admin','male','worker','enetcom','admin@gmail.com','99187251'),(2,'salem','aszdefrgth','youssef','choura','Female','Worker','triq taniour km 4.5  CafÃÂ© brothers','youssefc123@gmail.com','99187253'),(3,'ktyb','aszdefrgth','katybon','ktib','Female','Student','Leipziger Strasse 17','youssefch123@gmail.com','45321596'),(4,'ahmed','aszdefrgth','ahmed','choura','Female','Student','triq taniour km 4.5  Cafe ','ahmedchoura@gmail.com','99187256'),(5,'youssef','aszdefrgth','youssef','choura','Male','student','taniour km4','youssef@gmail.com','99187281'),(5653,'mariem','aszdefrgth','mariam','choura','Female','Worker','triq taniour km 4.5  CafÃ© brothers','mariemchoura8@gmail.com','99187255');
+INSERT INTO `t_users` VALUES (1,'admin','admin2022','admin','admin','male','worker','enetcom','admin@gmail.com','99187251'),(2,'salem','aszdefrgth','youssef','choura','Female','Worker','triq taniour km 4.5  CafÃÂ© brothers','youssefc123@gmail.com','99187253'),(3,'ktyb','aszdefrgth','katybon','ktib','Female','Student','Leipziger Strasse 17','youssefch123@gmail.com','45321596'),(4,'ahmed','aszdefrgth','ahmed','choura','Female','Student','triq taniour km 4.5  Cafe ','ahmedchoura@gmail.com','99187256'),(5654,'sankou7','aszdefrgth','sankou7','chouraaaa','Female','Jobless','triq taniour km 4.5  CafÃÂ© brothers','youss@gmail.com','99187257');
 /*!40000 ALTER TABLE `t_users` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -59,4 +59,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2022-03-24 10:47:25
+-- Dump completed on 2022-03-24 14:25:22

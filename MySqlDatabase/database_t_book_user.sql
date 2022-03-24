@@ -27,8 +27,8 @@ CREATE TABLE `t_book_user` (
   `id_user` int DEFAULT NULL,
   KEY `id_book` (`id_book`),
   KEY `id_user` (`id_user`),
-  CONSTRAINT `id_book` FOREIGN KEY (`id_book`) REFERENCES `t_books` (`isbn`),
-  CONSTRAINT `id_user` FOREIGN KEY (`id_user`) REFERENCES `t_users` (`id_user`)
+  CONSTRAINT `id_book` FOREIGN KEY (`id_book`) REFERENCES `t_books` (`isbn`) ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT `id_user` FOREIGN KEY (`id_user`) REFERENCES `t_users` (`id_user`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -38,7 +38,7 @@ CREATE TABLE `t_book_user` (
 
 LOCK TABLES `t_book_user` WRITE;
 /*!40000 ALTER TABLE `t_book_user` DISABLE KEYS */;
-INSERT INTO `t_book_user` VALUES ('0142437182',5),('0234567891',5),('0262680920',5);
+INSERT INTO `t_book_user` VALUES ('0856786786',5654);
 /*!40000 ALTER TABLE `t_book_user` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -51,4 +51,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2022-03-24 10:47:25
+-- Dump completed on 2022-03-24 14:25:22
