@@ -27,8 +27,8 @@ public class Book {
     }
 
     public void setIsbn(String isbn) throws BeanException {
-        //Checking ISBN validity
-        Pattern pattern = Pattern.compile("\\d+");
+        //Checking ISBN validity (10 or 13 numbers only)
+        Pattern pattern = Pattern.compile("^([0-9]{10}|[0-9]{13})$");
         if (pattern.matcher(isbn).matches() && (isbn.length() == 10 || isbn.length() == 13)){
             this.isbn=isbn;
         }

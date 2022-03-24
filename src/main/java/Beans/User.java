@@ -69,6 +69,7 @@ public class User {
     }
 
     public void setEmail(String email) throws BeanException {
+        //Checking Email validity
         final String regex = "^\\w+@\\w+\\.[a-z]{2,4}$";
         Pattern pattern = Pattern.compile(regex);
         Matcher matcher = pattern.matcher(email);
@@ -85,6 +86,7 @@ public class User {
     }
 
     public void setTelephone(String telephone) throws BeanException {
+        //Checking Phone number validity
         Pattern pattern = Pattern.compile("^([0-9]{8})$");
         if (pattern.matcher(telephone).matches()){
             this.telephone = telephone;

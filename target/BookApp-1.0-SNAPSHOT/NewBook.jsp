@@ -61,7 +61,7 @@
                 <label for="exampleFormControlSelect1" class="col-sm-2 col-form-label">Language</label>
                 <div class="col-sm-3">
                     <select class="form-control" name="Language" id="exampleFormControlSelect1">
-                        <option value="${CurrentBook.getLanguage()}"><c:out value="${CurrentBook.getLanguage()}"/>"</option>
+                        <option value="${CurrentBook.getLanguage()}"><c:out value="${CurrentBook.getLanguage()}"/></option>
                         <option value="English">English</option>
                         <option value="French">French</option>
                         <option value="Arabic">Arabic</option>
@@ -84,7 +84,7 @@
             <div class="form-group row mx-sm-3">
                 <label for="exampleFormControlTextarea1" class="col-sm-2 col-form-label">Abstract</label>
                 <div class="col-sm-3">
-                    <textarea class="form-control" name="Abstract" id="exampleFormControlTextarea1" rows="5"
+                    <textarea class="form-control" name="Abstract" id="exampleFormControlTextarea1" rows="5" placeholder="Abstract"
                               required><c:out value="${CurrentBook.getAbstract_()}"/></textarea>
                 </div>
                 <c:if test="${!empty AbstractError }">
