@@ -18,7 +18,7 @@ public class DaoFactory {
     //Setting Connection
     public static DaoFactory getInstance(){
         try {
-            Class.forName("com.mysql.cj.Driver");
+            Class.forName("com.mysql.jdbc.Driver");
         } catch (ClassNotFoundException e) {
             e.printStackTrace();
         }
