@@ -2,8 +2,9 @@ package Servlets.CommonServlets;
 
 import Beans.BeanException;
 import Beans.User;
+import DAO.Book.DaoBook;
 import DAO.DaoFactory;
-import DAO.DaoUser;
+import DAO.User.DaoUser;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -13,13 +14,15 @@ import java.io.IOException;
 @WebServlet(name = "Login", value = "/Login")
 public class Login extends HttpServlet {
     private DaoUser daoUser;
+    private DaoBook daoBook;
 
     @Override
     public void init() throws ServletException {
         //Getting a DaoFactory instance
         DaoFactory daoFactory = DaoFactory.getInstance();
         //Getting an implementation instance
-        this.daoUser = daoFactory.getUtilisateurDao();
+        this.daoUser = daoFactory.getDaoUser();
+        this.daoBook = daoFactory.getDaoBook();
     }
 
     @Override
@@ -60,7 +63,7 @@ public class Login extends HttpServlet {
                 cookie.setMaxAge(60*60*24*30);
                 response.addCookie(cookie);
                 //Forwarding to Admin home page
-                request.setAttribute("books",daoUser.getBooks());
+                request.setAttribute("books",daoBook.getBooks());
                 this.getServletContext().getRequestDispatcher("/Administrator.jsp").forward(request, response);
                 //if it's a normal user
             }else if (daoUser.signIn(user)){
@@ -72,7 +75,7 @@ public class Login extends HttpServlet {
                 cookie.setMaxAge(60*60*24);
                 response.addCookie(cookie);
                 //Forwarding to User home page
-                request.setAttribute("books",daoUser.getBooks());
+                request.setAttribute("books",daoBook.getBooks());
                 this.getServletContext().getRequestDispatcher("/UserHomePage.jsp").forward(request, response);
             }
         } catch (BeanException LoginError) {

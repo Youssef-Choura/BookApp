@@ -2,8 +2,9 @@ package Servlets.UserServlets;
 
 import Beans.Book;
 import Beans.User;
+import DAO.Book.DaoBook;
 import DAO.DaoFactory;
-import DAO.DaoUser;
+import DAO.User.DaoUser;
 import DAO.Exceptions.DaoException;
 
 import javax.servlet.ServletException;
@@ -17,13 +18,15 @@ import java.util.ArrayList;
 @WebServlet(name = "MarkBook", value = "/MarkBook")
 public class MarkBook extends HttpServlet {
     private DaoUser daoUser;
+    private DaoBook daoBook;
 
     @Override
     public void init() throws ServletException {
         //Getting a DaoFactory instance
         DaoFactory daoFactory = DaoFactory.getInstance();
         //Getting an implementation instance
-        this.daoUser = daoFactory.getUtilisateurDao();
+        this.daoUser = daoFactory.getDaoUser();
+        this.daoBook = daoFactory.getDaoBook();
     }
 
     @Override
@@ -38,18 +41,18 @@ public class MarkBook extends HttpServlet {
                 String userLogin = (String) request.getSession().getAttribute("login");
                 if (request.getParameter("MarkButton") != null) {
                     //Getting book and user infos
-                    Book book = daoUser.getBook(request.getParameter("MarkButton"));
+                    Book book = daoBook.getBook(request.getParameter("MarkButton"));
                     User user = daoUser.getUser(userLogin);
                     //Instantiating an arraylist to add marked books to
                     ArrayList<Book> books = new ArrayList<>();
                     try {
                         //MarkBook
-                        daoUser.MarkBook(book,user);
+                        daoBook.MarkBook(book,user);
                         //Getting books isbn
-                        ArrayList<String> ISBNS = daoUser.getMarkedISBNS(user);
+                        ArrayList<String> ISBNS = daoBook.getMarkedISBNS(user);
                         for (String isbn : ISBNS) {
                             //Creating books from isbns and adding them to the marked books list
-                            Book NewBook = daoUser.getBook(isbn);
+                            Book NewBook = daoBook.getBook(isbn);
                             books.add(NewBook);
                         }
                         //Forwarding book list to UserMarkedBooks.jsp page

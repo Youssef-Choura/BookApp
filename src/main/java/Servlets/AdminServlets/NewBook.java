@@ -2,8 +2,9 @@ package Servlets.AdminServlets;
 
 import Beans.BeanException;
 import Beans.Book;
+import DAO.Book.DaoBook;
 import DAO.DaoFactory;
-import DAO.DaoUser;
+import DAO.User.DaoUser;
 import DAO.Exceptions.AbstractException;
 import DAO.Exceptions.DaoException;
 import DAO.Exceptions.IsbnException;
@@ -17,28 +18,31 @@ import java.io.IOException;
 
 @WebServlet(name = "NewBook", value = "/NewBook")
 public class NewBook extends HttpServlet {
-    private DaoUser daoUser;
+    private DaoBook daoBook;
 
     @Override
     public void init() throws ServletException {
         //Getting a DaoFactory instance
         DaoFactory daoFactory = DaoFactory.getInstance();
         //Getting an implementation instance
-        this.daoUser = daoFactory.getUtilisateurDao();
+        this.daoBook = daoFactory.getDaoBook();
     }
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         try {
-            //Checking Admin session
-            String userLogin = (String) request.getSession().getAttribute("login");
-            if (userLogin.equals("admin")) {
-                //Redirect to UsersList.jsp page
-                response.sendRedirect("/BookApp/NewBook.jsp");
-            }
-            //If it's not the admin throw SessionError
-            else{
-                throw new ServletException("No session found u have to login first");
+            //Checking session
+            if (request.getSession().getAttribute("login") != null) {
+                //Checking Admin session
+                String userLogin = (String) request.getSession().getAttribute("login");
+                if (userLogin.equals("admin")) {
+                    //Redirect to UsersList.jsp page
+                    response.sendRedirect("/BookApp/NewBook.jsp");
+                }
+                //If it's not the admin throw SessionError
+                else {
+                    throw new ServletException("No session found u have to login first");
+                }
             }
         } catch (ServletException NoSessionError) {
             //Catch error message and display it on the login page
@@ -59,7 +63,8 @@ public class NewBook extends HttpServlet {
                 //Setting fields
                 try {
                     //Setting Year
-                    book.setYear(Integer.parseInt(request.getParameter("PublishYear")));
+                    int year = Integer.parseInt(request.getParameter("PublishYear"));
+                    book.setYear(year);
                 } catch (BeanException | NumberFormatException PublishYearError) {
                     //If year isn't between 1000 and 2022 send error message
                     request.setAttribute("PublishYearError", PublishYearError.getMessage());
@@ -80,9 +85,9 @@ public class NewBook extends HttpServlet {
 
                 try {
                     //Adding book to database
-                    daoUser.addBook(book);
+                    daoBook.addBook(book);
                     //Forwarding the new book list to the home page
-                    request.setAttribute("books", daoUser.getBooks());
+                    request.setAttribute("books", daoBook.getBooks());
                     this.getServletContext().getRequestDispatcher("/Administrator.jsp").forward(request, response);
                     //Catching exceptions
                 } catch (IsbnException ISBNError) {

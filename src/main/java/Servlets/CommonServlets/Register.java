@@ -3,11 +3,12 @@ package Servlets.CommonServlets;
 import Beans.BeanException;
 import Beans.User;
 import DAO.*;
+import DAO.Book.DaoBook;
 import DAO.Exceptions.DaoException;
 import DAO.Exceptions.EmailException;
 import DAO.Exceptions.LoginException;
 import DAO.Exceptions.TelephoneException;
-import DAO.DaoUser;
+import DAO.User.DaoUser;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -18,13 +19,15 @@ import java.util.Objects;
 @WebServlet(name = "Register", value = "/Register")
 public class Register extends HttpServlet {
     private DaoUser daoUser;
+    private DaoBook daoBook;
 
     @Override
     public void init() throws ServletException {
         //Getting a DaoFactory instance
         DaoFactory daoFactory = DaoFactory.getInstance();
         //Getting an implementation instance
-        this.daoUser = daoFactory.getUtilisateurDao();
+        this.daoUser = daoFactory.getDaoUser();
+        this.daoBook = daoFactory.getDaoBook();
     }
 
     @Override
@@ -97,7 +100,7 @@ public class Register extends HttpServlet {
             cookie.setMaxAge(60*60*24);
             response.addCookie(cookie);
             //Forwarding to User home page
-            request.setAttribute("books",daoUser.getBooks());
+            request.setAttribute("books",daoBook.getBooks());
             this.getServletContext().getRequestDispatcher("/UserHomePage.jsp").forward(request, response);
             //If user is not added reload and display errors
         } catch (DaoException UniqueError) {

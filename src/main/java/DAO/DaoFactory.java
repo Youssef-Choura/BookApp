@@ -1,6 +1,11 @@
 /* Dao initialisation */
 package DAO;
 
+import DAO.Book.DaoBook;
+import DAO.Book.DaoBookImpl;
+import DAO.User.DaoUser;
+import DAO.User.DaoUserImpl;
+
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
@@ -31,7 +36,10 @@ public class DaoFactory {
         return connection;
     }
     //Retrieving DAOs (Tables) so that the user can access to the connected database
-    public DaoUser getUtilisateurDao(){
+    public DaoUser getDaoUser(){
         return new DaoUserImpl(this);
+    }
+    public DaoBook getDaoBook(){
+        return new DaoBookImpl(this);
     }
 }

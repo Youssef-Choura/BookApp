@@ -1,7 +1,7 @@
 package Servlets.CommonServlets;
 
+import DAO.Book.DaoBook;
 import DAO.DaoFactory;
-import DAO.DaoUser;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -12,14 +12,14 @@ import java.io.IOException;
 
 @WebServlet(name = "AllBooks", value = "/AllBooks")
 public class AllBooks extends HttpServlet {
-    private DaoUser daoUser;
+    private DaoBook daoBook;
 
     @Override
     public void init() throws ServletException {
         //Getting a DaoFactory instance
         DaoFactory daoFactory = DaoFactory.getInstance();
         //Getting an implementation instance
-        this.daoUser = daoFactory.getUtilisateurDao();
+        this.daoBook = daoFactory.getDaoBook();
     }
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -30,12 +30,12 @@ public class AllBooks extends HttpServlet {
                 //If it's an administrator
                 if (userLogin.equals("admin")) {
                     //Forwarding to Admin books page
-                    request.setAttribute("books",daoUser.getBooks());
+                    request.setAttribute("books",daoBook.getBooks());
                     this.getServletContext().getRequestDispatcher("/Administrator.jsp").forward(request, response);
                     //If it's a normal user
                 } else {
                     //Forwarding to user books page
-                    request.setAttribute("books",daoUser.getBooks());
+                    request.setAttribute("books",daoBook.getBooks());
                     this.getServletContext().getRequestDispatcher("/UserHomePage.jsp").forward(request, response);
                 }
             }

@@ -1,8 +1,8 @@
 package Servlets.UserServlets;
 
 import Beans.Book;
+import DAO.Book.DaoBook;
 import DAO.DaoFactory;
-import DAO.DaoUser;
 
 import javax.servlet.*;
 import javax.servlet.http.*;
@@ -11,14 +11,14 @@ import java.io.IOException;
 
 @WebServlet(name = "ViewBook", value = "/ViewBook")
 public class ViewBook extends HttpServlet {
-    private DaoUser daoUser;
+    private DaoBook daoBook;
 
     @Override
     public void init() throws ServletException {
         //Getting a DaoFactory instance
         DaoFactory daoFactory = DaoFactory.getInstance();
         //Getting an implementation instance
-        this.daoUser = daoFactory.getUtilisateurDao();
+        this.daoBook = daoFactory.getDaoBook();
     }
 
     @Override
@@ -26,11 +26,10 @@ public class ViewBook extends HttpServlet {
         try {
             //Checking session
             if (request.getSession().getAttribute("login") != null) {
-                String userLogin = (String) request.getSession().getAttribute("login");
                 //Checking ISBN value
                 if (request.getParameter("ViewButton") != null) {
                     //Getting book info with the retrieved ISBN
-                    Book book = daoUser.getBook(request.getParameter("ViewButton"));
+                    Book book = daoBook.getBook(request.getParameter("ViewButton"));
                     //Forwarding book info to ViewBook.jsp and showing it
                     request.setAttribute("CurrentBook", book);
                     this.getServletContext().getRequestDispatcher("/ViewBook.jsp").forward(request, response);

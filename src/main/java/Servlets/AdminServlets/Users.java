@@ -1,7 +1,7 @@
 package Servlets.AdminServlets;
 
 import DAO.DaoFactory;
-import DAO.DaoUser;
+import DAO.User.DaoUser;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -19,22 +19,25 @@ public class Users extends HttpServlet {
         //Getting a DaoFactory instance
         DaoFactory daoFactory = DaoFactory.getInstance();
         //Getting an implementation instance
-        this.daoUser = daoFactory.getUtilisateurDao();
+        this.daoUser = daoFactory.getDaoUser();
     }
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         try {
-            //Checking Admin session
-            String userLogin = (String) request.getSession().getAttribute("login");
-            if (userLogin.equals("admin")) {
-                //Forwarding user's info list to UserList.jsp
-                request.setAttribute("Users", daoUser.getUsers());
-                this.getServletContext().getRequestDispatcher("/UsersList.jsp").forward(request, response);
-            }
-            //If it's not the admin throw SessionError
-            else {
-                throw new ServletException("No session found u have to login first");
+            //Checking session
+            if (request.getSession().getAttribute("login") != null) {
+                //Checking Admin session
+                String userLogin = (String) request.getSession().getAttribute("login");
+                if (userLogin.equals("admin")) {
+                    //Forwarding user's info list to UserList.jsp
+                    request.setAttribute("Users", daoUser.getUsers());
+                    this.getServletContext().getRequestDispatcher("/UsersList.jsp").forward(request, response);
+                }
+                //If it's not the admin throw SessionError
+                else {
+                    throw new ServletException("No session found u have to login first");
+                }
             }
         } catch (
                 ServletException NoSessionError) {

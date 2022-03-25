@@ -1,8 +1,5 @@
 package Servlets.CommonServlets;
 
-import DAO.DaoFactory;
-import DAO.DaoUser;
-
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -17,8 +14,7 @@ public class Logout extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         try {
             //Checking session
-            String userLogin = (String) request.getSession().getAttribute("login");
-            if (userLogin != null) {
+            if (request.getSession().getAttribute("login") != null) {
                 //Invalidate Session and forward to login page
                 request.getSession().invalidate();
                 this.getServletContext().getRequestDispatcher("/index.jsp").forward(request, response);

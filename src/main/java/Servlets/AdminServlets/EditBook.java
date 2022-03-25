@@ -2,8 +2,8 @@ package Servlets.AdminServlets;
 
 import Beans.BeanException;
 import Beans.Book;
+import DAO.Book.DaoBook;
 import DAO.DaoFactory;
-import DAO.DaoUser;
 import DAO.Exceptions.AbstractException;
 import DAO.Exceptions.DaoException;
 import DAO.Exceptions.IsbnException;
@@ -17,7 +17,7 @@ import java.io.IOException;
 
 @WebServlet(name = "EditBook", value = "/EditBook")
 public class EditBook extends HttpServlet {
-    private DaoUser daoUser;
+    private DaoBook daoBook;
     private String currentISBN;
     private Book currentBook;
 
@@ -26,28 +26,31 @@ public class EditBook extends HttpServlet {
         //Getting a DaoFactory instance
         DaoFactory daoFactory = DaoFactory.getInstance();
         //Getting an implementation instance
-        this.daoUser = daoFactory.getUtilisateurDao();
+        this.daoBook = daoFactory.getDaoBook();
     }
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         try {
-            //Checking Admin session
-            String userLogin = (String) request.getSession().getAttribute("login");
-            if (userLogin.equals("admin")) {
-                //Checking ISBN to edit value
-                if (request.getParameter("EditButton") != null) {
-                    //Getting currentISBN and currentBook info to display in the edit page
-                    currentISBN = request.getParameter("EditButton");
-                    currentBook = daoUser.getBook(currentISBN);
-                    //Forwarding book info to EditBook.jsp page
-                    request.setAttribute("CurrentBook", currentBook);
-                    this.getServletContext().getRequestDispatcher("/EditBook.jsp").forward(request, response);
+            //Checking session
+            if (request.getSession().getAttribute("login") != null) {
+                //Checking Admin session
+                String userLogin = (String) request.getSession().getAttribute("login");
+                if (userLogin.equals("admin")) {
+                    //Checking ISBN to edit value
+                    if (request.getParameter("EditButton") != null) {
+                        //Getting currentISBN and currentBook info to display in the edit page
+                        currentISBN = request.getParameter("EditButton");
+                        currentBook = daoBook.getBook(currentISBN);
+                        //Forwarding book info to EditBook.jsp page
+                        request.setAttribute("CurrentBook", currentBook);
+                        this.getServletContext().getRequestDispatcher("/EditBook.jsp").forward(request, response);
+                    }
                 }
-            }
-            //If it's not the admin throw SessionError
-            else {
-                throw new ServletException("No session found u have to login first");
+                //If it's not the admin throw SessionError
+                else {
+                    throw new ServletException("No session found u have to login first");
+                }
             }
         } catch (ServletException NoSessionError) {
             //Catch error message and display it on the login page
@@ -69,7 +72,8 @@ public class EditBook extends HttpServlet {
                     //Try Setting fields
                     try {
                         //try setting Year
-                        ModifiedBook.setYear(Integer.parseInt(request.getParameter("PublishYear")));
+                        int year = Integer.parseInt(request.getParameter("PublishYear"));
+                        ModifiedBook.setYear(year);
                     } catch (BeanException | NumberFormatException PublishYearError) {
                         //If year isn't between 1000 and 2022 send error message
                         request.setAttribute("PublishYearError", PublishYearError.getMessage());
@@ -87,7 +91,7 @@ public class EditBook extends HttpServlet {
                     ModifiedBook.setLanguage(request.getParameter("Language"));
                     try {
                         //Edit book
-                        daoUser.editBook(ModifiedBook, currentBook.getIsbn());
+                        daoBook.editBook(ModifiedBook, currentBook.getIsbn());
                         //Forwarding the modified book info to the BookContent.jsp page
                         request.setAttribute("CurrentBook", ModifiedBook);
                         this.getServletContext().getRequestDispatcher("/BookContent.jsp").forward(request, response);

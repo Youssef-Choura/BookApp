@@ -1,9 +1,8 @@
 package Servlets.AdminServlets;
 
-import Beans.BeanException;
 import Beans.Book;
+import DAO.Book.DaoBook;
 import DAO.DaoFactory;
-import DAO.DaoUser;
 import DAO.Exceptions.DaoException;
 
 import javax.servlet.ServletException;
@@ -15,14 +14,14 @@ import java.io.IOException;
 
 @WebServlet(name = "DeleteBook", value = "/DeleteBook")
 public class DeleteBook extends HttpServlet {
-    private DaoUser daoUser;
+    private DaoBook daoBook;
 
     @Override
     public void init() throws ServletException {
         //Getting a DaoFactory instance
         DaoFactory daoFactory = DaoFactory.getInstance();
         //Getting an implementation instance
-        this.daoUser = daoFactory.getUtilisateurDao();
+        this.daoBook = daoFactory.getDaoBook();
     }
 
     @Override
@@ -32,27 +31,30 @@ public class DeleteBook extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         try {
-            //Checking Admin session
-            String userLogin = (String) request.getSession().getAttribute("login");
-            if (userLogin.equals("admin")) {
-                //Checking ISBN value
-                if (request.getParameter("DeleteButton") != null) {
-                    try {
-                        //Getting book info with the retrieved ISBN
-                        Book book = daoUser.getBook (request.getParameter("DeleteButton"));
-                        //Deleting book
-                        daoUser.deleteBook(book);
-                        //Forwarding the new book list and refreshing the jsp page
-                        request.setAttribute("books", daoUser.getBooks());
-                        this.getServletContext().getRequestDispatcher("/Administrator.jsp").forward(request, response);
-                    } catch (DaoException e) {
-                        e.printStackTrace();
+            //Checking session
+            if (request.getSession().getAttribute("login") != null) {
+                //Checking Admin session
+                String userLogin = (String) request.getSession().getAttribute("login");
+                if (userLogin.equals("admin")) {
+                    //Checking ISBN value
+                    if (request.getParameter("DeleteButton") != null) {
+                        try {
+                            //Getting book info with the retrieved ISBN
+                            Book book = daoBook.getBook(request.getParameter("DeleteButton"));
+                            //Deleting book
+                            daoBook.deleteBook(book);
+                            //Forwarding the new book list and refreshing the jsp page
+                            request.setAttribute("books", daoBook.getBooks());
+                            this.getServletContext().getRequestDispatcher("/Administrator.jsp").forward(request, response);
+                        } catch (DaoException e) {
+                            e.printStackTrace();
+                        }
                     }
                 }
-            }
-            //If it's not the admin throw SessionError
-            else {
-                throw new ServletException("No session found u have to login first");
+                //If it's not the admin throw SessionError
+                else {
+                    throw new ServletException("No session found u have to login first");
+                }
             }
         } catch (ServletException NoSessionError) {
             //Catch error message and display it on the login page
