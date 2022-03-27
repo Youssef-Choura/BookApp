@@ -17,8 +17,7 @@ body {
 .LoginBox{
     position: relative;
     max-width: 500px;
-    max-height: 500px;
-    height: 100%;
+    height: max-content;
     width: 100%;
     background: #fff;
     padding: 25px 30px;

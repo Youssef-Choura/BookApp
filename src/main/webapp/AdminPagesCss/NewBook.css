@@ -1,0 +1,169 @@
+/* ===== Google Font Import - Poformsins ===== */
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
+
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Poppins', sans-serif;
+}
+.sub-container{
+    position: relative;
+    max-width: 700px;
+    height: max-content;
+    width: 100%;
+    background: #fff;
+    padding: 25px 30px;
+    border-radius: 10px;
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
+    overflow: hidden;
+    margin-left: 280px;
+    margin-top: 50px;
+}
+
+.sub-container .title{
+    font-size: 30px;
+    font-weight: 500;
+    position: relative;
+}
+.sub-container .title::before{
+    content: '';
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    height: 3px;
+    width: 30px;
+    background: linear-gradient(135deg, #71b7e6, #9b59b6);
+}
+
+.sub-container form .user-details,.Login-Information{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    margin: 20px 0 12px 0;
+}
+form .user-details .input-box,.Login-Information .input-box{
+    margin-bottom: 15px;
+    width: calc(100% / 2 - 20px);
+}
+.user-details,.Login-Information.input-box .details{
+    display: block;
+    font-weight: 500;
+    margin-bottom: 5px;
+}
+.user-details .input-box input,.Login-Information .input-box input{
+    height: 45px;
+    width: 300px;
+    outline: none;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    padding-left: 15px;
+    font-size: 16px;
+    border-bottom-width: 2px;
+    transition: all 0.3s ease;
+}
+
+
+.Login-Information .input-box  textarea{
+    outline: none;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    padding-left: 15px;
+    font-size: 16px;
+    border-bottom-width: 2px;
+    transition: all 0.3s ease;
+    width: 400px;
+}
+
+.user-details .input-box input:focus,.Login-Information .input-box input:focus,
+.user-details .input-box input:valid,.Login-Information .input-box input:valid{
+    border-color: #9b59b6;
+}
+.Login-Information .input-box textarea:focus,
+.Login-Information .input-box textarea:valid{
+    border-color: #9b59b6;
+}
+
+form .gender-details .gender-title{
+    font-size: 16px;
+    font-weight: 500;
+}
+
+
+.grade-details{
+    margin: 20px 0 12px 0;
+}
+form .grade-details label{
+    font-size: 16px;
+    font-weight: 500;
+}
+.grade-details select{
+    height: 25px;
+    width: 80px;
+    flex: 0 0 200px;
+    margin-left: 50px;
+}
+
+form .button{
+    height: 45px;
+    margin: 30px 0;
+}
+
+form .button input{
+    height: 100%;
+    width: 100%;
+    outline: none;
+    color: #fff;
+    border: none;
+    font-size: 18px;
+    font-weight: 500;
+    border-radius: 40px;
+    letter-spacing: 1px;
+    background: linear-gradient(135deg, #71b7e6,#9b59b6);
+}
+form .button input:hover{
+    cursor: pointer;
+    background:linear-gradient(-135deg, #71b7e6,#9b59b6);
+}
+
+form .Login-ref a{
+    text-decoration: none;
+    font-size: 12px;
+    line-height: 20px;
+    color: darkgrey ;
+}
+form .Login-ref a:hover{
+    color: #9b59b6;
+}
+
+@media (max-width: 584px ) {
+    .container{
+        max-width: 100%;
+    }
+    form .Login-Information .input-box{
+        margin-bottom: 15px;
+        width: calc(100% / 2 - 20px);
+    }
+    form .user-details .input-box{
+        margin-bottom: 15px;
+        width: 100%;
+    }
+    form .gender-details .category{
+        width: 100%;
+    }
+    .container form .user-details{
+        max-height: 300px;
+        overflow-y: scroll;
+    }
+    .user-details::-webkit-scrollbar{
+        width:0;
+    }
+}
+@media(max-width: 459px) {
+    .container .content .category {
+        flex-direction: column;
+    }
+}
+
+
+

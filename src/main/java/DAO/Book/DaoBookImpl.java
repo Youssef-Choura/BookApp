@@ -20,8 +20,6 @@ public class DaoBookImpl implements DaoBook{
         this.daoFactory = daoFactory;
     }
 
-
-
     /*----------------------------Books methods------------------------------------------*/
 
     /**
@@ -47,7 +45,7 @@ public class DaoBookImpl implements DaoBook{
                 if (Objects.equals(book.getIsbn(), isbn)) {
                     throw new IsbnException("Isbn already exists");
                 }
-                if (Objects.equals(book.getAbstract_(), abstract_)) {
+                if (book.getAbstract_().trim().equals(abstract_)) {
                     throw new AbstractException("Abstract already exists");
                 }
             }
@@ -65,7 +63,12 @@ public class DaoBookImpl implements DaoBook{
             preparedStatement.setString(3, book.getAuthors());
             preparedStatement.setString(4, book.getLanguage());
             preparedStatement.setString(5, book.getAbstract_());
-            preparedStatement.setInt(6, book.getYear());
+            //If an exception is thrown
+            if (book.getYear() == 0){
+                throw new SQLException("Invalid year");
+            }else {
+                preparedStatement.setInt(6, book.getYear());
+            }
             //Execute preparedStatement and commit changes
             preparedStatement.executeUpdate();
             connection.commit();
@@ -223,17 +226,19 @@ public class DaoBookImpl implements DaoBook{
         //Setting connection and preparing statement
         try (Connection connection = daoFactory.getConnection();
              Statement statement = connection.createStatement();
-             ResultSet resultSet = statement.executeQuery("SELECT isbn,abstract FROM t_books where not isbn = OldISBN;")) {
+             ResultSet resultSet = statement.executeQuery("SELECT isbn,abstract FROM t_books;")) {
 
             while (resultSet.next()) {
                 String isbn = resultSet.getString("isbn");
                 String abstract_ = resultSet.getString("abstract");
                 //If the new book's isbn and abstract already exist throw exceptions
-                if (Objects.equals(book.getIsbn(), isbn)) {
-                    throw new IsbnException("Isbn already exists");
-                }
-                if (Objects.equals(book.getAbstract_(), abstract_)) {
-                    throw new AbstractException("Abstract already exists");
+                if (!isbn.equals(OldISBN)){
+                    if (book.getIsbn().equals(isbn)) {
+                        throw new IsbnException("Isbn already exists");
+                    }
+                    if (book.getAbstract_().trim().equals(abstract_.trim())) {
+                        throw new AbstractException("Abstract already exists");
+                    }
                 }
             }
         } catch (SQLException Error) {
@@ -250,7 +255,12 @@ public class DaoBookImpl implements DaoBook{
             preparedStatement.setString(3, book.getAuthors());
             preparedStatement.setString(4, book.getLanguage());
             preparedStatement.setString(5, book.getAbstract_());
-            preparedStatement.setInt(6, book.getYear());
+            //If an exception is thrown
+            if (book.getYear() == 0){
+                throw new SQLException("Invalid year");
+            }else {
+                preparedStatement.setInt(6, book.getYear());
+            }
             preparedStatement.setString(7, OldISBN);
             //Executing prepared statement and committing changes
             preparedStatement.executeUpdate();

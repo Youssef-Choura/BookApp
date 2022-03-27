@@ -32,24 +32,23 @@
             <a class="nav-link" href="Logout">logout</a>
         </li>
     </ul>
-
     <div class="row">
         <c:forEach items="${books}" var="book">
         <div class="col-md-4">
             <div class="product-top text-center">
                 <img src="./BookPics/${book.getTitle()}.jpg" alt="BookImage">
                 <div class="overlay">
-                    <form method="get" action="BookContent">
-                    <button type="submit" name="ViewButton" value="${book.getIsbn()}" class="btn btn-secondary" title="View">
+                    <form method="get" style='display:inline;' action="BookContent">
+                    <button type="submit"  name="ViewButton" value="${book.getIsbn()}" class="btn btn-secondary" title="View">
                         <i class="fa-regular fa-eye"></i>
                     </button>
                     </form>
-                    <form method="get" action="EditBook">
+                    <form method="get" style='display:inline;' action="EditBook">
                     <button type="submit" name="EditButton" value="${book.getIsbn()}" class="btn btn-secondary" title="Edit">
                         <i class="fa-regular fa-pen-to-square"></i>
                     </button>
                     </form>
-                    <form method="post" action="DeleteBook">
+                    <form method="post" style='display:inline;' action="DeleteBook">
                     <button type="submit" name="DeleteButton" value="${book.getIsbn()}" class="btn btn-secondary" title="Delete">
                         <i class="fa-regular fa-trash-can"></i>
                     </button>

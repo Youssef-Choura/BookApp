@@ -42,7 +42,6 @@ public class AllBooks extends HttpServlet {
             //If there's no session throw SessionError
             else {
                 throw new ServletException("No session found u have to login first");
-
             }
         } catch (ServletException NoSessionError) {
             //Catch error message and display it on the login page

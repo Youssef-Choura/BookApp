@@ -13,13 +13,15 @@ body{
 }
 .container{
     position: relative;
+    width: 100%;
+    height: max-content;
     margin: 5%;
     background: #fff;
     padding: 25px 30px;
     border-radius: 5px;
     box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
     overflow: hidden;
-
+    background: url(../BooksPics/pic3.jpg) center;
 }
 .container h2{
     font-size: 60px;
@@ -45,22 +47,29 @@ body{
     margin-left: 8.5%;
     margin-bottom: 5%;
 }
-.container .nav{
-    margin-left: 8.5%;
+.nav-pills .nav-link.active, .nav-pills .show>.nav-link {
+    color: #fff;
+    background: linear-gradient(135deg, #71b7e6, #9b59b6);
 }
-.container .welcome-message a{
-    font-size: 30px;
-    font-weight: 500;
-    margin-left: 10%;
+.nav-link {
+    display: block;
+    padding: .5rem 1rem;
+    color: #71b7e6;
+    text-decoration: none;
+    transition: color .15s ease-in-out,background-color .15s ease-in-out,border-color .15s ease-in-out;
+    font-size: 20px;
 }
-.container .welcome-message a:hover{
-    cursor: pointer;
-    color: darkorchid;
+.nav {
+    display: flex;
+    flex-wrap: wrap;
+    margin-bottom: 0;
+    list-style: none;
+    margin-left: 100px;
 }
 .row{
     padding-top: 10%;
 }
-img{
+.product-top img{
     width: 200px;
     height: 300px;
 }
@@ -68,7 +77,6 @@ img{
     color: #28a745;
     font-size: 10px;
 }
-
 .product-bottom h3{
     font-size: 20px;
     font-weight: bold;
@@ -77,24 +85,21 @@ img{
     font-size: 15px;
     padding-bottom: 10px;
 }
-.overlay .form {
-    margin-top: 2% ;
+.overlay{
+    margin-top: 4% ;
     justify-content: space-between;
-
 }
-
-.overlay .form .fa-regular{
+.overlay .fa-regular{
     cursor: pointer;
     color: black ;
     font-size: 20px ;
 }
-.overlay .btn-secondary{
+.overlay .btn{
     background: linear-gradient(135deg, #71b7e6, #9b59b6);
 }
-.overlay .btn-secondary:hover{
+.overlay .btn:hover{
     background: linear-gradient(-135deg, #71b7e6, #9b59b6);
 }
-
 @media screen and (max-width: 768px)
 { .row
 {flex-direction: column;} }

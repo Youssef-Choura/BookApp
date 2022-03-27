@@ -2,16 +2,14 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <!-- ===== Iconscout CSS ===== -->
     <link rel="stylesheet" href="https://unicons.iconscout.com/release/v4.0.0/css/line.css">
     <!-- ===== CSS ===== -->
-    <link rel="stylesheet" href="RegistrationCss/Registration.css">
+    <link rel="stylesheet" href="./RegistrationCss/Registration.css">
     <title>Registration Form</title>
 
 </head>
-<body>
+<body style="height: 130vh;">
 <div class="container">
     <div class="title">Registration</div>
     <form method="post" action="Register">
@@ -54,7 +52,7 @@
             <div class="input-box">
                 <span class="details">Phone Number</span>
                 <label for="Telephone">
-                    <input type="text" name="Telephone" id="Telephone" placeholder="(+212)" value="<c:out value="${CurrentUser.getTelephone()}"/>" required>
+                    <input type="text" name="Telephone" id="Telephone" placeholder="(+216)" value="<c:out value="${CurrentUser.getTelephone()}"/>" required>
                 </label>
                 <c:if test="${!empty TelephoneError || !empty TelephoneFormatError }">
                     <p style="font-size: 12px ; margin-bottom: 15px ; color: #9b59b6">

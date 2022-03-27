@@ -6,7 +6,7 @@
     <link rel="stylesheet" type="text/css" href="LoginCss/Login.css">
 </head>
 <body>
-<div class="LoginBox">
+<div class="LoginBox" style="height: max-content;">
     <div class="title">Login</div>
     <form method="post" action="Login">
         <div class="User-details">

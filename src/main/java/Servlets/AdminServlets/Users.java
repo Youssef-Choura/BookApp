@@ -34,10 +34,10 @@ public class Users extends HttpServlet {
                     request.setAttribute("Users", daoUser.getUsers());
                     this.getServletContext().getRequestDispatcher("/UsersList.jsp").forward(request, response);
                 }
+                }
                 //If it's not the admin throw SessionError
                 else {
                     throw new ServletException("No session found u have to login first");
-                }
             }
         } catch (
                 ServletException NoSessionError) {

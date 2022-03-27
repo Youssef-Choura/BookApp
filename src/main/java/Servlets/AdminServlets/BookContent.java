@@ -37,10 +37,10 @@ public class BookContent extends HttpServlet {
                         this.getServletContext().getRequestDispatcher("/BookContent.jsp").forward(request, response);
                     }
                 }
-                //If it's not the admin throw SessionError
-                else {
-                    throw new ServletException("No session found u have to login first");
                 }
+            //If it's not the admin throw SessionError
+            else {
+                throw new ServletException("No session found u have to login first");
             }
         } catch (ServletException NoSessionError) {
             //Catch error message and display it on the login page

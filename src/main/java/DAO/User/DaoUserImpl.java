@@ -153,21 +153,23 @@ public class DaoUserImpl implements DaoUser {
         //Setting connection and preparing statement
         try (Connection connection = daoFactory.getConnection();
              Statement statement = connection.createStatement();
-             ResultSet resultSet = statement.executeQuery("select login,email,telephone from t_users where not login = loginToEdit;")) {
+             ResultSet resultSet = statement.executeQuery("select login,email,telephone from t_users ;")) {
             //Checking if the login email and telephone already exists in database
             while (resultSet.next()) {
                 String login = resultSet.getString("login");
                 String email = resultSet.getString("email");
                 String telephone = resultSet.getString("telephone");
                 //If they exist throw Exceptions
-                if (Objects.equals(user.getEmail(), email)) {
-                    throw new EmailException("Email already exists");
-                }
-                if (Objects.equals(user.getLogin(), login)) {
-                    throw new LoginException("Login already exists");
-                }
-                if (Objects.equals(user.getTelephone(), telephone)) {
-                    throw new TelephoneException("Phone number already exists");
+                if (!login.equals(loginToEdit)){
+                    if (Objects.equals(user.getEmail(), email)) {
+                        throw new EmailException("Email already exists");
+                    }
+                    if (Objects.equals(user.getLogin(), login)) {
+                        throw new LoginException("Login already exists");
+                    }
+                    if (Objects.equals(user.getTelephone(), telephone)) {
+                        throw new TelephoneException("Phone number already exists");
+                    }
                 }
             }
         } catch (SQLException Error) {

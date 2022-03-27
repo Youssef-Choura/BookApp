@@ -39,10 +39,10 @@ public class NewBook extends HttpServlet {
                     //Redirect to UsersList.jsp page
                     response.sendRedirect("/BookApp/NewBook.jsp");
                 }
+                }
                 //If it's not the admin throw SessionError
                 else {
                     throw new ServletException("No session found u have to login first");
-                }
             }
         } catch (ServletException NoSessionError) {
             //Catch error message and display it on the login page

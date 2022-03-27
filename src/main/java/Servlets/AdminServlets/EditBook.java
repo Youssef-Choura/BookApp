@@ -47,10 +47,10 @@ public class EditBook extends HttpServlet {
                         this.getServletContext().getRequestDispatcher("/EditBook.jsp").forward(request, response);
                     }
                 }
-                //If it's not the admin throw SessionError
-                else {
-                    throw new ServletException("No session found u have to login first");
                 }
+            //If it's not the admin throw SessionError
+            else {
+                throw new ServletException("No session found u have to login first");
             }
         } catch (ServletException NoSessionError) {
             //Catch error message and display it on the login page
@@ -78,6 +78,8 @@ public class EditBook extends HttpServlet {
                         //If year isn't between 1000 and 2022 send error message
                         request.setAttribute("PublishYearError", PublishYearError.getMessage());
                     }
+
+
                     try {
                         //try setting ISBN
                         ModifiedBook.setIsbn((request.getParameter("ISBN")));

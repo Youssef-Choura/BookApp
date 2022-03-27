@@ -136,10 +136,10 @@ public class EditUser extends HttpServlet {
                         }
                     }
                 }
-                //If it's not the admin throw SessionError
-                else {
-                    throw new ServletException("No session found u have to login first");
                 }
+            //If it's not the admin throw SessionError
+            else {
+                throw new ServletException("No session found u have to login first");
             }
         } catch (ServletException NoSessionError) {
             //Catch error message and display on the login page
