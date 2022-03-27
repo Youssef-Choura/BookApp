@@ -9,9 +9,11 @@
   
 ## How to install and run project 
   
-  -Download **Intellij IDEA** https://www.jetbrains.com/idea/download/#section=windows
+  -Download **Intellij IDEA**
   
-  -Download **Apache tomcat server v9.0.5** https://tomcat.apache.org/download-90.cgi 
+  -Download **java JDK 17**
+  
+  -Download **Apache tomcat server v9.0.5** 
   
   -Download Mysql database system https://dev.mysql.com/downloads/installer/ 
   
