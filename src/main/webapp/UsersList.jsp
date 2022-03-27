@@ -34,7 +34,7 @@
         </li>
     </ul>
     <div class="sub-container">
-        <h3>User's list</h3>
+        <h3>Users list</h3>
         <table class="table table-hover">
             <thead>
             <tr>
