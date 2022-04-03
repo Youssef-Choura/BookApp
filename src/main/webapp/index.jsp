@@ -15,9 +15,9 @@
                 <label for="Username">
                     <input type="text" name="Username" id="Username" placeholder="Enter a maximum 10 digits username" required>
                 </label>
-                <c:if test="${!empty LoginLengthError }">
+                <c:if test="${!empty requestScope.LoginLengthError }">
                     <p style="font-size: 12px ; margin-bottom: 15px ; color: #9b59b6">
-                        <c:out value="${LoginLengthError}"/>
+                        <c:out value="${requestScope.LoginLengthError}"/>
                     </p>
                 </c:if>
             </div>
@@ -26,24 +26,24 @@
                 <label for="Password">
                     <input type="password" name="Password" id="Password" placeholder="Enter a minimum 6 digits password" required>
                 </label>
-                <c:if test="${!empty PasswordLengthError }">
+                <c:if test="${!empty requestScope.PasswordLengthError }">
                     <p style="font-size: 12px ; margin-bottom: 15px ; color: #9b59b6">
-                        <c:out value="${PasswordLengthError}"/>
+                        <c:out value="${requestScope.PasswordLengthError}"/>
                     </p>
                 </c:if>
             </div>
         </div>
-        <c:if test="${!empty LoginInfoError }">
+        <c:if test="${!empty requestScope.LoginInfoError }">
             <p style="font-size: 12px ; margin-bottom: 15px ; color: #9b59b6">
-                <c:out value="${LoginInfoError}"/>
+                <c:out value="${requestScope.LoginInfoError}"/>
             </p>
         </c:if>
         <div class="button">
             <input type="submit" value="Login">
         </div>
-        <c:if test="${!empty NoSessionError }">
+        <c:if test="${!empty requestScope.NoSessionError }">
             <p style="font-size: 12px ; margin-bottom: 15px ; color: #9b59b6">
-                <c:out value="${NoSessionError}"/>
+                <c:out value="${requestScope.NoSessionError}"/>
             </p>
         </c:if>
         <div class="Register-ref">Or

@@ -33,6 +33,7 @@ public class EditUser extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         try {
+            if (request.getSession().getAttribute("login") != null) {
             //Checking Admin session
             String userLogin = (String) request.getSession().getAttribute("login");
             if (userLogin.equals("admin")) {
@@ -44,6 +45,7 @@ public class EditUser extends HttpServlet {
                     request.setAttribute("CurrentUser", currentUser);
                     this.getServletContext().getRequestDispatcher("/EditUser.jsp").forward(request, response);
                 }
+            }
             }
             //If it's not the admin throw SessionError
             else {

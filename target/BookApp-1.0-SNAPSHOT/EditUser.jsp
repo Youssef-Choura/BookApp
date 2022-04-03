@@ -5,7 +5,7 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet"
           integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.0/css/all.min.css">
-    <title>Title</title>
+    <title>Edit user</title>
 </head>
 <body>
 <div class="container">
@@ -42,33 +42,33 @@
                         <span class="details">First name</span>
                         <label for="FirstName">
                             <input type="text" name="FirstName" id="FirstName" placeholder="Enter your first name "
-                                   value="<c:out value="${CurrentUser.getFirstName()}"/>" required>
+                                   value="<c:out value="${requestScope.CurrentUser.getFirstName()}"/>" required>
                         </label>
                     </div>
                     <div class="input-box">
                         <span class="details">Family name</span>
                         <label for="FamilyName">
                             <input type="text" name="FamilyName" id="FamilyName" placeholder="Enter your family name "
-                                   value="<c:out value="${CurrentUser.getFamilyName()}"/>" required>
+                                   value="<c:out value="${requestScope.CurrentUser.getFamilyName()}"/>" required>
                         </label>
                     </div>
                     <div class="input-box">
                         <span class="details">Address</span>
                         <label for="Address">
                             <input type="text" name="Address" id="Address" placeholder="Enter your Address"
-                                   value="<c:out value="${CurrentUser.getAddress()}"/>" required>
+                                   value="<c:out value="${requestScope.CurrentUser.getAddress()}"/>" required>
                         </label>
                     </div>
                     <div class="input-box">
                         <span class="details">Email</span>
                         <label for="Email">
                             <input type="email" name="Email" id="Email" placeholder="example@example.example"
-                                   value="<c:out value="${CurrentUser.getEmail()}"/>" required>
+                                   value="<c:out value="${requestScope.CurrentUser.getEmail()}"/>" required>
                         </label>
-                        <c:if test="${!empty EmailFormatError || !empty EmailError }">
+                        <c:if test="${!empty requestScope.EmailFormatError || !empty requestScope.EmailError }">
                             <p style="font-size: 12px ; margin-bottom: 15px ; color: #9b59b6">
-                                <c:out value="${EmailFormatError}"/>
-                                <c:out value="${EmailError}"/>
+                                <c:out value="${requestScope.EmailFormatError}"/>
+                                <c:out value="${requestScope.EmailError}"/>
                             </p>
                         </c:if>
                     </div>
@@ -76,12 +76,12 @@
                         <span class="details">Phone Number</span>
                         <label for="Telephone">
                             <input type="text" name="Telephone" id="Telephone" placeholder="(+216)"
-                                   value="<c:out value="${CurrentUser.getTelephone()}"/>" required>
+                                   value="<c:out value="${requestScope.CurrentUser.getTelephone()}"/>" required>
                         </label>
-                        <c:if test="${!empty TelephoneError || !empty TelephoneFormatError }">
+                        <c:if test="${!empty requestScope.TelephoneError || !empty requestScope.TelephoneFormatError }">
                             <p style="font-size: 12px ; margin-bottom: 15px ; color: #9b59b6">
-                                <c:out value="${TelephoneError}"/>
-                                <c:out value="${TelephoneFormatError}"/>
+                                <c:out value="${requestScope.TelephoneError}"/>
+                                <c:out value="${requestScope.TelephoneFormatError}"/>
                             </p>
                         </c:if>
                     </div>
@@ -110,7 +110,7 @@
                     <label for="Grade">Grade</label>
                     <select name="Grade" id="Grade" required>
                         <option>
-                            <c:out value="${CurrentUser.getGrade()}"/>
+                            <c:out value="${requestScope.CurrentUser.getGrade()}"/>
                         </option>
                         <option value="Student">Student</option>
                         <option value="Worker">Worker</option>
@@ -124,12 +124,12 @@
                         <span class="details">Username</span>
                         <label for="Username">
                             <input type="text" name="Login" id="Username" placeholder="Username (maximum 10 digits)"
-                                   value="<c:out value="${CurrentUser.getLogin()}"/>" required>
+                                   value="<c:out value="${requestScope.CurrentUser.getLogin()}"/>" required>
                         </label>
-                        <c:if test="${!empty LoginLengthError || !empty LoginError }">
+                        <c:if test="${!empty requestScope.LoginLengthError || !empty requestScope.LoginError }">
                             <p style="font-size: 12px ; margin-bottom: 15px ; color: #9b59b6">
-                                <c:out value="${LoginLengthError}"/>
-                                <c:out value="${LoginError}"/>
+                                <c:out value="${requestScope.LoginLengthError}"/>
+                                <c:out value="${requestScope.LoginError}"/>
                             </p>
                         </c:if>
                     </div>
@@ -137,12 +137,12 @@
                     <div class="input-box">
                         <span class="details">Password</span>
                         <label for="Password">
-                            <input type="password" name="Password" id="Password" value="<c:out value="${CurrentUser.getPassword()}"/>"
+                            <input type="password" name="Password" id="Password" value="<c:out value="${requestScope.CurrentUser.getPassword()}"/>"
                                    placeholder="Password(minimum 6 digits)" required>
                         </label>
-                        <c:if test="${!empty PasswordLengthError }">
+                        <c:if test="${!empty requestScope.PasswordLengthError }">
                             <p style="font-size: 12px ; margin-bottom: 15px ; color: #9b59b6">
-                                <c:out value="${PasswordLengthError}"/>
+                                <c:out value="${requestScope.PasswordLengthError}"/>
                             </p>
                         </c:if>
                     </div>
@@ -150,9 +150,9 @@
                 <div class="button">
                     <input type="submit" value="Validate">
                 </div>
-                <c:if test="${!empty UniqueError }">
+                <c:if test="${!empty requestScope.UniqueError }">
                     <p style="font-size: 12px ; margin: 15px ; color: #9b59b6">
-                        <c:out value="${UniqueError}"/>
+                        <c:out value="${requestScope.UniqueError}"/>
                     </p>
                 </c:if>
             </form>

@@ -1,9 +1,10 @@
 package Beans;
 
+import java.io.Serializable;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-public class User {
+public class User implements Serializable {
     private int userId;
     private String login;
     private String password;
@@ -15,6 +16,8 @@ public class User {
     private String email;
     private String telephone;
 
+    public User() {
+    }
 
     public int getUserId() {
         return userId;
@@ -88,11 +91,11 @@ public class User {
     public void setTelephone(String telephone) throws BeanException {
         //Checking Phone number validity
         Pattern pattern = Pattern.compile("^([0-9]{8})$");
-        if (pattern.matcher(telephone).matches()){
-            this.telephone = telephone;
+        if (!pattern.matcher(telephone).matches()){
+            throw new BeanException("Phone number can only contain 8 numbers");
         }
         else {
-            throw new BeanException("Phone number can only contain 8 numbers");
+            this.telephone = telephone;
         }
     }
 

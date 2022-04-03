@@ -1,8 +1,9 @@
 package Beans;
 
+import java.io.Serializable;
 import java.util.regex.Pattern;
 
-public class Book {
+public class Book implements Serializable {
     private String isbn;
     private String title;
     private String authors;
@@ -13,30 +14,9 @@ public class Book {
     public Book() {
     }
 
-    public Book(String isbn, String title, String authors, String language, int year, String abstract_) {
-        this.isbn = isbn;
-        this.title = title;
-        this.authors = authors;
-        this.language = language;
-        this.year = year;
-        this.abstract_ = abstract_;
-    }
-
     public String getIsbn() {
         return isbn;
     }
-
-    public void setIsbn(String isbn) throws BeanException {
-        //Checking ISBN validity (10 or 13 numbers only)
-        Pattern pattern = Pattern.compile("^([0-9]{10}|[0-9]{13})$");
-        if (pattern.matcher(isbn).matches() && (isbn.length() == 10 || isbn.length() == 13)){
-            this.isbn=isbn;
-        }
-        else {
-            throw new BeanException("ISBN can contain only 10 or 13 numbers");
-        }
-    }
-
     public String getTitle() {
         return title;
     }
@@ -52,6 +32,18 @@ public class Book {
     public void setAuthors(String authors) {
         this.authors = authors;
     }
+
+    public void setIsbn(String isbn) throws BeanException {
+        //Checking ISBN validity (10 or 13 numbers only)
+        Pattern pattern = Pattern.compile("^([0-9]{10}|[0-9]{13})$");
+        if (pattern.matcher(isbn).matches() && (isbn.length() == 10 || isbn.length() == 13)){
+            this.isbn=isbn;
+        }
+        else {
+            throw new BeanException("ISBN can contain only 10 or 13 numbers");
+        }
+    }
+
 
     public String getLanguage() {
         return language;

@@ -5,7 +5,7 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet"
           integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.0/css/all.min.css">
-    <title>Book Form</title>
+    <title>Edit Book</title>
 </head>
 <body>
 <div class="container">
@@ -38,27 +38,27 @@
                 <div class="input-box">
                     <span class="details">Title</span>
                     <label for="title">
-                        <input type="text" name="Title" id="title" placeholder="Enter title" value="<c:out value="${CurrentBook.getTitle()}"/>"
+                        <input type="text" name="Title" id="title" placeholder="Enter title" value="<c:out value="${requestScope.CurrentBook.getTitle()}"/>"
                                required>
                     </label>
                 </div>
                 <div class="input-box">
                     <span class="details">ISBN</span>
                     <label for="isbn">
-                        <input type="text" name="ISBN" id="isbn" placeholder="Enter isbn " value="<c:out value="${CurrentBook.getIsbn()}"/>"
+                        <input type="text" name="ISBN" id="isbn" placeholder="Enter isbn " value="<c:out value="${requestScope.CurrentBook.getIsbn()}"/>"
                                required>
                     </label>
                 </div>
-                <c:if test="${!empty ISBNError || !empty ISBNFormatError }">
+                <c:if test="${!empty requestScope.ISBNError || !empty requestScope.ISBNFormatError }">
                     <p style="font-size: 12px ; margin-bottom: 15px ; color: #9b59b6">
-                        <c:out value="${ISBNError}"/>
-                        <c:out value="${ISBNFormatError}"/>
+                        <c:out value="${requestScope.ISBNError}"/>
+                        <c:out value="${requestScope.ISBNFormatError}"/>
                     </p>
                 </c:if>
                 <div class="input-box">
                     <span class="details">Author(s)</span>
                     <label for="Author">
-                        <input type="text" name="Authors" id="Author" placeholder="Enter Author" value="<c:out value="${CurrentBook.getAuthors()}"/>"
+                        <input type="text" name="Authors" id="Author" placeholder="Enter Author" value="<c:out value="${requestScope.CurrentBook.getAuthors()}"/>"
                                required>
                     </label>
                 </div>
@@ -66,7 +66,7 @@
             <div class="grade-details">
                 <label for="language">Language</label>
                 <select name="Language" id="language" required>
-                    <option value="${CurrentBook.getLanguage()}"><c:out value="${CurrentBook.getLanguage()}"/></option>--%>
+                    <option value="${requestScope.CurrentBook.getLanguage()}"><c:out value="${requestScope.CurrentBook.getLanguage()}"/></option>--%>
                     <option value="English">English</option>
                     <option value="Arabic">Arabic</option>
                     <option value="French">French</option>
@@ -76,33 +76,33 @@
                 <div class="input-box">
                     <span class="details">Publish Year</span>
                     <label for="year">
-                        <input type="text" name="PublishYear" id="year" placeholder="Enter publish year" value="<c:out value="${CurrentBook.getYear()}"/>"
+                        <input type="text" name="PublishYear" id="year" placeholder="Enter publish year" value="<c:out value="${requestScope.CurrentBook.getYear()}"/>"
                                required>
                     </label>
                 </div>
-                <c:if test="${!empty PublishYearError }">
+                <c:if test="${!empty requestScope.PublishYearError }">
                     <p style="font-size: 12px ; margin-bottom: 15px ; color: #9b59b6">
-                        <c:out value="${PublishYearError}"/>
+                        <c:out value="${requestScope.PublishYearError}"/>
                     </p>
                 </c:if>
                 <div class="input-box">
                     <span class="details">Abstract</span>
                     <label for="Abstract">
                     <textarea class="form-control" name="Abstract" id="Abstract" rows="4" placeholder="Abstract"
-                              required><c:out value="${CurrentBook.getAbstract_()}"/></textarea>
+                              required><c:out value="${requestScope.CurrentBook.getAbstract_()}"/></textarea>
                     </label>
                 </div>
-                <c:if test="${!empty AbstractError }">
+                <c:if test="${!empty requestScope.AbstractError }">
                     <p style="font-size: 12px ; margin-bottom: 15px ; color: #9b59b6">
-                        <c:out value="${AbstractError}"/>
+                        <c:out value="${requestScope.AbstractError}"/>
                     </p>
                 </c:if>
                 <div class="button">
                     <input type="submit" value="Validate">
                 </div>
-                <c:if test="${!empty DaoError }">
+                <c:if test="${!empty requestScope.DaoError }">
                     <p style="font-size: 12px ; margin-bottom: 15px ; color: #9b59b6">
-                        <c:out value="${DaoError}"/>
+                        <c:out value="${requestScope.DaoError}"/>
                     </p>
                 </c:if>
             </div>

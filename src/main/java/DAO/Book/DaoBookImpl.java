@@ -63,12 +63,7 @@ public class DaoBookImpl implements DaoBook{
             preparedStatement.setString(3, book.getAuthors());
             preparedStatement.setString(4, book.getLanguage());
             preparedStatement.setString(5, book.getAbstract_());
-            //If an exception is thrown
-            if (book.getYear() == 0){
-                throw new SQLException("Invalid year");
-            }else {
-                preparedStatement.setInt(6, book.getYear());
-            }
+            preparedStatement.setInt(6, book.getYear());
             //Execute preparedStatement and commit changes
             preparedStatement.executeUpdate();
             connection.commit();
@@ -255,12 +250,7 @@ public class DaoBookImpl implements DaoBook{
             preparedStatement.setString(3, book.getAuthors());
             preparedStatement.setString(4, book.getLanguage());
             preparedStatement.setString(5, book.getAbstract_());
-            //If an exception is thrown
-            if (book.getYear() == 0){
-                throw new SQLException("Invalid year");
-            }else {
-                preparedStatement.setInt(6, book.getYear());
-            }
+            preparedStatement.setInt(6, book.getYear());
             preparedStatement.setString(7, OldISBN);
             //Executing prepared statement and committing changes
             preparedStatement.executeUpdate();

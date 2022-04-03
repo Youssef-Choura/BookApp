@@ -30,6 +30,7 @@
         </li>
     </ul>
     <div class="row">
+        <jsp:useBean id="books" scope="request" type="java.util.List"/>
         <c:forEach items="${books}" var="book">
             <div class="col-md-4">
                 <div class="product-top text-center">

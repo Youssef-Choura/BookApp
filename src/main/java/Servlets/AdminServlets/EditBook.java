@@ -69,6 +69,7 @@ public class EditBook extends HttpServlet {
                 if (currentISBN != null && currentBook != null) {
                     //Instantiating an empty book
                     Book ModifiedBook = new Book();
+                    boolean Status = true;
                     //Try Setting fields
                     try {
                         //try setting Year
@@ -76,6 +77,7 @@ public class EditBook extends HttpServlet {
                         ModifiedBook.setYear(year);
                     } catch (BeanException | NumberFormatException PublishYearError) {
                         //If year isn't between 1000 and 2022 send error message
+                        Status = false;
                         request.setAttribute("PublishYearError", PublishYearError.getMessage());
                     }
 
@@ -85,12 +87,15 @@ public class EditBook extends HttpServlet {
                         ModifiedBook.setIsbn((request.getParameter("ISBN")));
                     } catch (BeanException ISBNFormatError) {
                         //if ISBN isn't composed of 10 or 13 numbers send error
+                        Status = false;
                         request.setAttribute("ISBNFormatError", ISBNFormatError.getMessage());
                     }
                     ModifiedBook.setTitle(request.getParameter("Title"));
                     ModifiedBook.setAuthors(request.getParameter("Authors"));
                     ModifiedBook.setAbstract_(request.getParameter("Abstract"));
                     ModifiedBook.setLanguage(request.getParameter("Language"));
+
+                    if (Status) {
                     try {
                         //Edit book
                         daoBook.editBook(ModifiedBook, currentBook.getIsbn());
@@ -114,6 +119,11 @@ public class EditBook extends HttpServlet {
 
                     } catch (AbstractException AbstractError) {
                         request.setAttribute("AbstractError", AbstractError.getMessage());
+                        request.setAttribute("CurrentBook", currentBook);
+                        this.getServletContext().getRequestDispatcher("/EditBook.jsp").forward(request, response);
+                    }
+                }
+                    else {
                         request.setAttribute("CurrentBook", currentBook);
                         this.getServletContext().getRequestDispatcher("/EditBook.jsp").forward(request, response);
                     }
