@@ -9,7 +9,7 @@
   
 ## How to install and run project 
   
-  -Download **Intellij IDEA**
+  -Download **Intellij IDEA Ultimate version**
   
   -Download **java JDK 17**
   
