@@ -34,7 +34,7 @@
   
   Interfaces preview :
   
-  ![image](https://user-images.githubusercontent.com/73803585/187121931-604dd73b-1d7e-4017-91de-7283f9cfe1eb.png)
+  ![image](https://user-images.githubusercontent.com/73803585/187122856-3762b655-b870-4385-9c56-063353f6ebc2.png)
   ![image](https://user-images.githubusercontent.com/73803585/187122535-975c98ec-314a-4a2f-8ab5-c277252e868e.png)
   ![image](https://user-images.githubusercontent.com/73803585/187122680-e9ba48a0-a4a8-4163-bc6b-f4a7c96101aa.png)
   
