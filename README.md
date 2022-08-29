@@ -27,10 +27,16 @@
   --> BookApp:WarExploded
   
 ## More info
-  
+
   Maven Dependencies added : jstl , sql
   
   Admin info : (login : admin, password : admin2022) 
+  
+  Interfaces preview :
+  
+  ![image](https://user-images.githubusercontent.com/73803585/187121931-604dd73b-1d7e-4017-91de-7283f9cfe1eb.png)
+  ![image](https://user-images.githubusercontent.com/73803585/187122535-975c98ec-314a-4a2f-8ab5-c277252e868e.png)
+  ![image](https://user-images.githubusercontent.com/73803585/187122680-e9ba48a0-a4a8-4163-bc6b-f4a7c96101aa.png)
   
 ## Contributing
   Pull requests are welcome. For major changes, please open an issue first to discuss what you would like to change.
