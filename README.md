@@ -1,8 +1,8 @@
 # BookApp
 ## Project Description 
 
-  BookApp is a web application that gives the user the ability to check available books (Already added to database) see their content (Abstract,ISBN,title,
-  publish year and language) mark as favorite and unmark it. The user can obviously login and logout from the application as well. If logged in with the admin info,
+  BookApp is a web application that provides books to the user (Already added to database) and see their content (Abstract,ISBN,title,
+  publish year and language) mark as favorite and unmark it. The user can login and logout from the application as well. If logged in with the admin info,
   the user will be able to see the users list, edit a user , delete a user , edit a book , delete a book and add a new book.I worked with the **java EE** platform ,
   **Apache tomcat server** , used the **MVC model** design in which i created **Servlets**, **java beans** , followed the 
   **DAO pattern** implementing Dao interfaces and using **MySql** database system.
